@@ -45,5 +45,10 @@
       <td><input tabindex="26" formControlName="5_5" type="text"></td>
     </tr>
   </table>
-  <button tabindex="27" type="submit">Abschicken!</button>
+  <button [disabled]="!isBeforeDeadline" tabindex="27" type="submit">Speichern</button>
 </form>
+
+<h2>Diese fleißigen Bienen haben schon eine Liste gespeichert:</h2>
+<ul *ngFor="let user of usersStartedList">
+  <li>{{ user }}</li>
+</ul>

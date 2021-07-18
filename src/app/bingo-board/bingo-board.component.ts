@@ -14,6 +14,8 @@ export class BingoBoardComponent implements OnInit {
   itemRef: AngularFireObject<any>;
   item: Observable<any>;
   bingoBoard: FormGroup
+  isBeforeDeadline: boolean = new Date().getTime() / 1000 < 1626678000;
+  usersStartedList: Array<string> = [];
 
   constructor(db: AngularFireDatabase) {
     this.itemRef = db.object('80s')
@@ -51,7 +53,8 @@ export class BingoBoardComponent implements OnInit {
   ngOnInit(): void {
     this.itemRef.snapshotChanges().subscribe( action => {
       const username = localStorage.getItem('username');
-      const userTips = action.payload.val()
+      const userTips = action.payload.val();
+      this.usersStartedList = Object.keys(userTips);
       if( username ) {
         this.bingoBoard.setValue(userTips[username])
       }
