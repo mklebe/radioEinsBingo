@@ -1,0 +1,21 @@
+<h1>RadioEins Top100 Bingo</h1>
+<ng-container *ngIf="username; else loggedout">
+  <p>Hallo {{ username }}!</p>
+  <p>Lass uns mit ein paar Tipps beginnen!</p>
+</ng-container>
+<ng-template #loggedout>
+  <p>
+    Oh wir haben einen neuen Herausforderer! Bitte sag mir wie ich dich ansprechen kann,
+    dann kannst du auch gleich loslegen!
+  </p>
+  <form (ngSubmit)="register()">
+    <label>
+      <input
+        placeholder="Benutzername"
+        type="text" 
+        [ngModelOptions]="{standalone: true}"
+        [(ngModel)]="tempUsername">
+    </label>
+    <button type="submit">Registrieren</button>
+  </form>
+</ng-template>

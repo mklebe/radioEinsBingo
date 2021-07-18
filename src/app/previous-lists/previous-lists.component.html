@@ -1,0 +1,4 @@
+<h2>{{ drugBoard.name }}</h2>
+<ul *ngFor="let bli of drugBoard.lines; index as i">
+  <li>{{ bli.placement }} {{bli.artist}} {{bli.songName}}</li>
+</ul>
