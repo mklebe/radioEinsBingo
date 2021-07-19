@@ -1,5 +1,6 @@
 <h1>Bingo Liste für die radioEins Top100</h1>
 <h2>Thema 80er</h2>
+<div *ngIf="notification" class="note">{{ notification }}</div>
 <form [formGroup]="bingoBoard" (ngSubmit)="submitForm()">
   <table>
     <tr>

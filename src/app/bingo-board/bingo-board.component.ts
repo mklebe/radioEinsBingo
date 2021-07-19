@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class BingoBoardComponent implements OnInit {
 
+  notification: string ='';
   itemRef: AngularFireObject<any>;
   item: Observable<any>;
   bingoBoard: FormGroup
@@ -66,7 +67,13 @@ export class BingoBoardComponent implements OnInit {
     if(!!username) {
       this.itemRef.update( {
         [username]: this.bingoBoard.value
-      })
+      }).then((() => {
+        this.notification = "Liste ist gespeichert!"
+
+        window.setTimeout(() => {
+          this.notification = '';
+        }, 2000)
+      }))
     }
   }
 

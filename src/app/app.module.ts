@@ -9,13 +9,15 @@ import { AppComponent } from './app.component';
 import { PreviousListsComponent } from './previous-lists/previous-lists.component';
 import { BingoBoardComponent } from './bingo-board/bingo-board.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { CategoryListComponent } from './category-list/category-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PreviousListsComponent,
     BingoBoardComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    CategoryListComponent
   ],
   imports: [
     BrowserModule,
