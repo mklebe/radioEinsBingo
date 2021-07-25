@@ -10,6 +10,9 @@ import { PreviousListsComponent } from './previous-lists/previous-lists.componen
 import { BingoBoardComponent } from './bingo-board/bingo-board.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { CategoryListComponent } from './category-list/category-list.component';
+import { SongListService } from './song-list.service';
+import { HttpClientModule } from '@angular/common/http';
+import { ResultComponent } from './result/result.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,8 @@ import { CategoryListComponent } from './category-list/category-list.component';
     PreviousListsComponent,
     BingoBoardComponent,
     WelcomeComponent,
-    CategoryListComponent
+    CategoryListComponent,
+    ResultComponent
   ],
   imports: [
     BrowserModule,
@@ -26,8 +30,11 @@ import { CategoryListComponent } from './category-list/category-list.component';
     AngularFireModule.initializeApp(environment.firebase),
     AppRoutingModule,
     FormsModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    SongListService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

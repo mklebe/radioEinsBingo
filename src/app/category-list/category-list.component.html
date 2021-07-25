@@ -7,5 +7,5 @@
 
 <input type="text" [(ngModel)]="searchTerm" (input)="searchArtist()">
 <ul *ngFor="let hit of searchResult">
-  <li>{{ hit.placement }}. {{ hit.artist }} - {{ hit.songName }}</li>
+  <li>{{ hit.placement }}. {{ hit.artist }} - {{ hit.song }}</li>
 </ul>

@@ -1,0 +1,11 @@
+<h2>Ergebnisse</h2>
+<p>Deine Punkte: {{ this.result }}</p>
+<ul>
+  <li *ngFor="let b of bingoBoard">
+    <p [ngClass]="{ 'success': b.marker === markerTypes.CORRECT_COLUMN, 'warning': b.marker === markerTypes.IN_LIST}">
+      {{ b.artist }} - {{ b.song }}
+    </p>
+    <button (click)="isInList(b)">Ist in der Liste</button>
+    <button (click)="correctColumn(b)">Richtige Spalte</button>
+  </li>
+</ul>

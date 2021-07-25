@@ -3,22 +3,28 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
 import { Observable } from 'rxjs';
+import { SongListService } from '../song-list.service';
 
 @Component({
   selector: 'app-bingo-board',
   templateUrl: './bingo-board.component.html',
   styleUrls: ['./bingo-board.component.sass']
 })
+
 export class BingoBoardComponent implements OnInit {
 
   notification: string ='';
   itemRef: AngularFireObject<any>;
   item: Observable<any>;
-  bingoBoard: FormGroup
-  isBeforeDeadline: boolean = new Date().getTime() / 1000 < 1626678000;
+  bingoBoard: FormGroup;
+  isBeforeDeadline: boolean = true;
   usersStartedList: Array<string> = [];
+  top100List: Array<any> = [];
 
-  constructor(db: AngularFireDatabase) {
+  constructor(
+    private readonly db: AngularFireDatabase,
+    private readonly songlistApi: SongListService,
+  ) {
     this.itemRef = db.object('80s')
     this.item = this.itemRef.valueChanges();
 
@@ -59,6 +65,10 @@ export class BingoBoardComponent implements OnInit {
       if( username ) {
         this.bingoBoard.setValue(userTips[username])
       }
+    })
+
+    this.songlistApi.getSongList().subscribe(( songlist ) => {
+      this.top100List = songlist;
     })
   }
 

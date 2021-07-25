@@ -4,11 +4,11 @@
 <form [formGroup]="bingoBoard" (ngSubmit)="submitForm()">
   <table>
     <tr>
-      <td>100 - 81</td>
-      <td>80 - 61</td>
-      <td>60 - 41</td>
-      <td>40 - 21</td>
-      <td>20 - 1</td>
+      <th>100 - 81</th>
+      <th>80 - 61</th>
+      <th>60 - 41</th>
+      <th>40 - 21</th>
+      <th>20 - 1</th>
     </tr>
     <tr>
       <td><input tabindex="2" formControlName="1_1" type="text"></td>
@@ -48,6 +48,11 @@
   </table>
   <button [disabled]="!isBeforeDeadline" tabindex="27" type="submit">Speichern</button>
 </form>
+
+<h2>Der aktuelle Stand der Top 100</h2>
+<ul *ngFor="let boardLineItem of top100List">
+  <li>{{ boardLineItem.placement }}. {{ boardLineItem.artist }} - {{ boardLineItem.song }}</li>
+</ul>
 
 <h2>Diese fleißigen Bienen haben schon eine Liste gespeichert:</h2>
 <ul *ngFor="let user of usersStartedList">
