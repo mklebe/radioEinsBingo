@@ -1,3 +1,26 @@
-export const environment = {
-  production: true
+interface FirebaseConfig {
+    apiKey: string;
+    authDomain: string;
+    databaseURL: string;
+    projectId: string;
+    storageBucket: string;
+    messagingSenderId: string;
+    appId: string;
+}
+interface EnvironmentParameter {
+  production: boolean
+  firebase: FirebaseConfig
+}
+
+export const environment: EnvironmentParameter = {
+  production: true,
+  firebase: {
+    apiKey: "AIzaSyCnqaKlgHVWYk55hboVbDuRfCqkKrWMZRQ",
+    authDomain: "radioeins-bingo.firebaseapp.com",
+    databaseURL: "https://radioeins-bingo-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "radioeins-bingo",
+    storageBucket: "radioeins-bingo.appspot.com",
+    messagingSenderId: "454088054246",
+    appId: "1:454088054246:web:2402fdd215dcd860c5f227"
+  }
 };
