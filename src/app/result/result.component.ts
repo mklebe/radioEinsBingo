@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
 import { Observable } from 'rxjs';
 import { BoardLineItem } from '../previous-lists/lists';
+import { SongListService } from '../song-list.service';
 
 enum BoardMarker {
   NOT_LISTED,
@@ -28,6 +29,7 @@ export class ResultComponent implements OnInit {
 
   constructor(
     private readonly db: AngularFireDatabase,
+    private readonly songlistApi: SongListService,
   ) {
     this.itemRef = db.object('80s')
     this.item = this.itemRef.valueChanges();
@@ -99,10 +101,15 @@ export class ResultComponent implements OnInit {
       if( username ) {
         for(let i = 1; i < 6; i++) {
           for(let j = 1; j < 6; j++) {
-            const entry = userTips[username][`${j}_${i}`]
+            const entry: string = userTips[username][`${j}_${i}`]
+            entry.replace('–', '-')
+            const titleDivider = new RegExp(/ – | - /);
+            const artist: string = entry.split(titleDivider)[0]
+            const song: string = entry.split(titleDivider)[1];
+
             const bli: MarkedBoardLineItem = {
-              artist: entry.split('-')[0],
-              song: entry.split('-')[1],
+              artist,
+              song,
               marker: BoardMarker.NOT_LISTED,
               placement: 0,
             }
@@ -110,8 +117,34 @@ export class ResultComponent implements OnInit {
           }
         }
       }
+      let runningCount = [
+        100, 80, 60, 40, 20,
+        100, 80, 60, 40, 20,
+        100, 80, 60, 40, 20,
+        100, 80, 60, 40, 20,
+        100, 80, 60, 40, 20,
+      ];
       this.bingoBoard = result;
-      console.log(this.bingoBoard.length)
+
+      this.bingoBoard.forEach(( bli, index ) => {
+        bli.placement = runningCount[index];
+
+        this.songlistApi.searchSong('Top100Eighties', bli.artist, bli.song).subscribe((result) => {
+          if(result.length > 0) {
+            const a = bli.placement - result[0].placement
+            if (a > 0 && a < 20) {
+              bli.marker = BoardMarker.CORRECT_COLUMN
+            } else {
+              bli.marker = BoardMarker.IN_LIST
+            }
+            bli.placement = result[0].placement
+          } else {
+            bli.marker = BoardMarker.NOT_LISTED
+            bli.placement = 0
+          }
+          this.updateResult()
+        })
+      })
     })
   }
 

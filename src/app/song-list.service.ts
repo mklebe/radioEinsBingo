@@ -15,4 +15,8 @@ export class SongListService {
   getSongList(): Observable<any> {
     return this.httpClient.get(this.url);
   }
+
+  searchSong(category: string, artist: string, song: string): Observable<any> {
+    return this.httpClient.get(`${this.url}/${category}/${artist}/${song}`)
+  }
 }

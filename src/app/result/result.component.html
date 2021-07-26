@@ -1,11 +1,18 @@
 <h2>Ergebnisse</h2>
 <p>Deine Punkte: {{ this.result }}</p>
 <ul>
+  <li>100 - 81</li>
+  <li>80 - 61</li>
+  <li>60 - 41</li>
+  <li>40 - 21</li>
+  <li>20 - 1</li>
   <li *ngFor="let b of bingoBoard">
     <p [ngClass]="{ 'success': b.marker === markerTypes.CORRECT_COLUMN, 'warning': b.marker === markerTypes.IN_LIST}">
       {{ b.artist }} - {{ b.song }}
+      <span *ngIf="b.placement">
+        <br />
+        Gefunden auf {{ b.placement }}
+      </span>
     </p>
-    <button (click)="isInList(b)">Ist in der Liste</button>
-    <button (click)="correctColumn(b)">Richtige Spalte</button>
   </li>
 </ul>

@@ -1,10 +1,28 @@
-<h2>Bisher abgeschlossene Kategorien</h2>
-<ul *ngFor="let category of categories">
-  <li>{{ category.name }}</li>
+<h2>Kommende Top 100 Listen</h2>
+<ul class="categories" >
+  <li *ngFor="let category of upcomingLists">
+    <a routerLink="/kategorien/{{category.name}}">
+      <article [ngClass]="{'closed': category.isClosed}">
+        <img src="{{ category.imageUrl }}" alt="">
+        <p>{{ category.displayName }}</p>
+      </article>
+    </a>
+  </li>
+</ul>
+
+<h2>Abgeschlossene Top 100 Listen</h2>
+<ul class="categories" >
+  <li *ngFor="let category of closedLists">
+    <a routerLink="/kategorien/{{category.name}}">
+      <article [ngClass]="{'closed': category.isClosed}">
+        <img src="{{ category.imageUrl }}" alt="">
+        <p>{{ category.displayName }}</p>
+      </article>
+    </a>
+  </li>
 </ul>
 
 <h2>Künstlersuche</h2>
-
 <input type="text" [(ngModel)]="searchTerm" (input)="searchArtist()">
 <ul *ngFor="let hit of searchResult">
   <li>{{ hit.placement }}. {{ hit.artist }} - {{ hit.song }}</li>
