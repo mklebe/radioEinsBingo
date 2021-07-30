@@ -14,7 +14,7 @@ app.use(requireHTTPS);
 app.use(express.static('./dist/top100-bingo'));
 
 app.get('/*', ({ res }) => {
-  res.sendFile('index.html', { root: 'dist/<name-on-package.json>/' } )
+  res.sendFile('index.html', { root: 'dist/top100-bingo/' } )
 });
 
 app.listen(process.env.PORT || 80);
