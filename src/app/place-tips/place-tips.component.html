@@ -1,0 +1,50 @@
+<a routerLink="/kategorien">zurück zu der Kategorieliste</a>
+<h1>{{ userTips.category.displayName }}</h1>
+
+<form [formGroup]="bingoBoard" (ngSubmit)="submitForm()">
+  <table>
+    <tr>
+      <th>100 - 81</th>
+      <th>80 - 61</th>
+      <th>60 - 41</th>
+      <th>40 - 21</th>
+      <th>20 - 1</th>
+    </tr>
+    <tr>
+      <td><input tabindex="2" formControlName="1_1" type="text"></td>
+      <td><input tabindex="7" formControlName="2_1" type="text"></td>
+      <td><input tabindex="12" formControlName="3_1" type="text"></td>
+      <td><input tabindex="17" formControlName="4_1" type="text"></td>
+      <td><input tabindex="22" formControlName="5_1" type="text"></td>
+    </tr>
+    <tr>
+      <td><input tabindex="3" formControlName="1_2" type="text"></td>
+      <td><input tabindex="8" formControlName="2_2" type="text"></td>
+      <td><input tabindex="13" formControlName="3_2" type="text"></td>
+      <td><input tabindex="18" formControlName="4_2" type="text"></td>
+      <td><input tabindex="23" formControlName="5_2" type="text"></td>
+    </tr>
+    <tr>
+      <td><input tabindex="4" formControlName="1_3" type="text"></td>
+      <td><input tabindex="9" formControlName="2_3" type="text"></td>
+      <td><input tabindex="14" formControlName="3_3" type="text"></td>
+      <td><input tabindex="19" formControlName="4_3" type="text"></td>
+      <td><input tabindex="24" formControlName="5_3" type="text"></td>
+    </tr>
+    <tr>
+      <td><input tabindex="5" formControlName="1_4" type="text"></td>
+      <td><input tabindex="10" formControlName="2_4" type="text"></td>
+      <td><input tabindex="15" formControlName="3_4" type="text"></td>
+      <td><input tabindex="20" formControlName="4_4" type="text"></td>
+      <td><input tabindex="25" formControlName="5_4" type="text"></td>
+    </tr>
+    <tr>
+      <td><input tabindex="6" formControlName="1_5" type="text"></td>
+      <td><input tabindex="11" formControlName="2_5" type="text"></td>
+      <td><input tabindex="16" formControlName="3_5" type="text"></td>
+      <td><input tabindex="21" formControlName="4_5" type="text"></td>
+      <td><input tabindex="26" formControlName="5_5" type="text"></td>
+    </tr>
+  </table>
+  <button [disabled]="!isBeforeDeadline" tabindex="27" type="submit">Speichern</button>
+</form>

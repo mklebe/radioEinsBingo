@@ -13,6 +13,8 @@ import { CategoryListComponent } from './category-list/category-list.component';
 import { SongListService } from './song-list.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ResultComponent } from './result/result.component';
+import { PlaceTipsComponent } from './place-tips/place-tips.component';
+import { UserService } from './user.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { ResultComponent } from './result/result.component';
     BingoBoardComponent,
     WelcomeComponent,
     CategoryListComponent,
-    ResultComponent
+    ResultComponent,
+    PlaceTipsComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +37,7 @@ import { ResultComponent } from './result/result.component';
   ],
   providers: [
     SongListService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })
