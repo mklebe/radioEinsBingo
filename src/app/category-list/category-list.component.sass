@@ -1,3 +1,4 @@
+$height-image: 170/300*100
 a
   text-decoration: none
   color: #333
@@ -13,9 +14,21 @@ a
   li
     padding: 8px
   
+  article
+    position: relative
+    padding-bottom: $height-image * 1%
+    width: 100%
+
+    p
+      position: absolute
+      background-color: rgba(255,255,255, .9)
+      padding: 8px
+      margin: 0
+      width: 100%
+      bottom: 0
+
   img
-    height: auto
-    max-width: 300px
+    position: absolute
     width: 100%
 
   li:hover
