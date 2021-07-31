@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Category, categories } from '../categories';
 import { UserService } from '../user.service';
 
@@ -16,7 +17,7 @@ interface UserTip {
   templateUrl: './place-tips.component.html',
   styleUrls: ['./place-tips.component.sass']
 })
-export class PlaceTipsComponent implements OnInit {
+export class PlaceTipsComponent implements OnInit, OnDestroy {
 
   userTips: UserTip = {
     category: {
@@ -33,6 +34,8 @@ export class PlaceTipsComponent implements OnInit {
 
   bingoBoard: FormGroup;
   isBeforeDeadline: boolean = true
+
+  private navigationSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -66,27 +69,47 @@ export class PlaceTipsComponent implements OnInit {
       '4_5': new FormControl(''),
       '5_5': new FormControl(''),
     });
+
+    this.navigationSubscription = this.router.events.subscribe(async (event) => {
+      if (event instanceof NavigationEnd) {
+        const catName = this.route.snapshot.paramMap.get('name')
+        if (!catName) {
+          this.router.navigate(['/kategorien', {}]);
+          return
+        }
+
+        this.setCurrentTip(catName)
+      }
+    })
   }
 
-  async ngOnInit(): Promise<void> {
-    const catName = this.route.snapshot.paramMap.get('name')
-    if( !catName ) {
-      this.router.navigate(['/kategorien', {}]);
-      return
-    }
-
+  private async setCurrentTip(catName: string) {
     this.userTips.user = await this.userService.getCurrentUser()
     this.userTips.category = categories.filter(cat => cat.name === catName)[0];
-    this.userService.getUserTips( catName )
-      .then( value => {
-        if( value['1_1'] ) {
+    this.userService.getUserTips(catName)
+      .then(value => {
+        if (value['1_1']) {
           this.bingoBoard.setValue(value)
         }
       });
   }
 
+  async ngOnDestroy() {
+    this.navigationSubscription.unsubscribe();
+  }
+
+  async ngOnInit(): Promise<void> {
+    const catName = this.route.snapshot.paramMap.get('name')
+    if (!catName) {
+      this.router.navigate(['/kategorien', {}]);
+      return
+    }
+
+    this.setCurrentTip(catName);
+  }
+
   submitForm() {
-    this.userService.setUserTip( this.userTips.category.name, this.bingoBoard.value )
+    this.userService.setUserTip(this.userTips.category.name, this.bingoBoard.value)
       .then(() => {
         this.notification = "Liste ist gespeichert!"
 
