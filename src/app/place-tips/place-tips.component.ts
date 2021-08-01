@@ -3,14 +3,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Category, categories } from '../categories';
+import { UserTip } from '../interfaces';
 import { UserService } from '../user.service';
 
-
-interface UserTip {
-  category: Category,
-  user: string,
-  tips: Array<[string, string, string, string, string]>
-}
 
 @Component({
   selector: 'app-place-tips',
