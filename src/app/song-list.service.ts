@@ -22,6 +22,9 @@ export class SongListService {
   }
 
   searchSong(category: string, artist: string, song: string): Observable<any> {
+    artist = window.encodeURIComponent(artist)
+    song = window.encodeURIComponent(song)
+
     return this.httpClient.get(`${this.url}/${category}/${artist}/${song}`)
   }
 

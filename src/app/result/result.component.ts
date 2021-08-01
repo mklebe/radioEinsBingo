@@ -87,7 +87,7 @@ export class ResultComponent implements OnInit {
                   if(result.length > 0) {
                     const foundItem = result[0];
                     const a = bli.placement - foundItem.placement
-                    if (a > 0 && a < 20) {
+                    if (a >= 0 && a < 20) {
                       bli.marker = BoardMarker.CORRECT_COLUMN
                     } else {
                       bli.marker = BoardMarker.IN_LIST
