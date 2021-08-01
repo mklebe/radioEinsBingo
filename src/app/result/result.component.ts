@@ -33,11 +33,11 @@ export class ResultComponent implements OnInit {
 
   private updateResult() {
     this.result = 0
-    this.bingoBoard.forEach(( mbli ) => {
-      if( mbli.marker === BoardMarker.CORRECT_COLUMN ) {
+    this.bingoBoard.forEach((mbli) => {
+      if (mbli.marker === BoardMarker.CORRECT_COLUMN) {
         this.result += 3
       }
-      if( mbli.marker === BoardMarker.IN_LIST ) {
+      if (mbli.marker === BoardMarker.IN_LIST) {
         this.result += 1
       }
     })
@@ -60,50 +60,50 @@ export class ResultComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.userTips.user = await this.userService.getCurrentUser()
-    if( this.userTips.user ) {
-    this.userService.getUserTips( 'Top100Mobility' )
-          .then(async ( value ) => {
-            const result: MarkedBoardLineItem[] = []
-            for(let i = 1; i < 6; i++) {
-              for(let j = 1; j < 6; j++) {
-                result.push( this.convertStringToMarkedBoardLineItem(value[`${j}_${i}`]) );
-              }
+    if (this.userTips.user) {
+      this.userService.getUserTips('Top100Mobility')
+        .then(async (value) => {
+          const result: MarkedBoardLineItem[] = []
+          for (let i = 1; i < 6; i++) {
+            for (let j = 1; j < 6; j++) {
+              result.push(this.convertStringToMarkedBoardLineItem(value[`${j}_${i}`]));
             }
+          }
 
-            let runningCount = [
-              100, 80, 60, 40, 20,
-              100, 80, 60, 40, 20,
-              100, 80, 60, 40, 20,
-              100, 80, 60, 40, 20,
-              100, 80, 60, 40, 20,
-            ];
-            this.bingoBoard = result;
-            await this.songlistApi.updateCurrentIndex();
+          let runningCount = [
+            100, 80, 60, 40, 20,
+            100, 80, 60, 40, 20,
+            100, 80, 60, 40, 20,
+            100, 80, 60, 40, 20,
+            100, 80, 60, 40, 20,
+          ];
+          this.bingoBoard = result;
+          await this.songlistApi.updateCurrentIndex();
 
-            const a: Promise<MarkedBoardLineItem>[] = this.bingoBoard.map(( bli, index ) => {
-              bli.placement = runningCount[index];
-              return new Promise((resolve, reject) => {
-                this.songlistApi.searchSong('Top100Mobility', bli.artist, bli.song).subscribe((result) => {
-                  if(result.length > 0) {
-                    const foundItem = result[0];
-                    const a = bli.placement - foundItem.placement
-                    if (a >= 0 && a < 20) {
-                      bli.marker = BoardMarker.CORRECT_COLUMN
-                    } else {
-                      bli.marker = BoardMarker.IN_LIST
-                    }
-                    bli.placement = foundItem.placement
+          const a: Promise<MarkedBoardLineItem>[] = this.bingoBoard.map((bli, index) => {
+            bli.placement = runningCount[index];
+            return new Promise((resolve, reject) => {
+              this.songlistApi.searchSong('Top100Mobility', bli.artist, bli.song).subscribe((result) => {
+                if (result.length > 0) {
+                  const foundItem = result[0];
+                  const a = bli.placement - foundItem.placement
+                  if (a >= 0 && a < 20) {
+                    bli.marker = BoardMarker.CORRECT_COLUMN
                   } else {
-                    bli.marker = BoardMarker.NOT_LISTED
-                    bli.placement = 0
+                    bli.marker = BoardMarker.IN_LIST
                   }
-                  resolve(bli)
-                })
+                  bli.placement = foundItem.placement
+                } else {
+                  bli.marker = BoardMarker.NOT_LISTED
+                  bli.placement = 0
+                }
+                resolve(bli)
               })
             })
-
-            Promise.all(a).then(() => this.updateResult())
           })
-      }
+
+          Promise.all(a).then(() => this.updateResult())
+        })
+    }
   }
 }
