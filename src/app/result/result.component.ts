@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserTip } from '../interfaces';
+import { BoardLineItem } from '../previous-lists/lists';
 import { SongListService } from '../song-list.service';
 import { UserService } from '../user.service';
 import { BoardMarker, calculateBingoPoints, MarkedBoardLineItem } from './utils';
@@ -12,6 +13,8 @@ import { BoardMarker, calculateBingoPoints, MarkedBoardLineItem } from './utils'
 export class ResultComponent implements OnInit {
   result: number = 0;
   bingoBoard: Array<MarkedBoardLineItem> = [];
+
+  billboard: Array<BoardLineItem> = []
 
   markerTypes = BoardMarker
 
@@ -59,6 +62,9 @@ export class ResultComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.songlistApi.getSongList('Top100Mobility').subscribe((data) => {
+      this.billboard = data;
+    })
     this.userTips.user = await this.userService.getCurrentUser()
     if (this.userTips.user) {
       this.userService.getUserTips('Top100Mobility')

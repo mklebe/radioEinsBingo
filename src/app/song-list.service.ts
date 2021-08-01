@@ -17,8 +17,8 @@ export class SongListService {
     window.updatePastIndicies = this.updatePastIndicies;
   }
 
-  getSongList(): Observable<any> {
-    return this.httpClient.get(this.url);
+  getSongList(category: string): Observable<any> {
+    return this.httpClient.get(`${this.url}/${category}/search`);
   }
 
   searchSong(category: string, artist: string, song: string): Observable<any> {

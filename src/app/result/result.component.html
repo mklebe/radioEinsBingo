@@ -16,3 +16,9 @@
     </p>
   </li>
 </ul>
+
+<h2>Die aktuelle Liste</h2>
+
+<p *ngFor="let b of billboard">
+  {{ b.placement }}. {{ b.artist }} - {{ b.song }}
+</p>
