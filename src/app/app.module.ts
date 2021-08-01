@@ -7,7 +7,6 @@ import { environment } from 'src/environments/environment.prod';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PreviousListsComponent } from './previous-lists/previous-lists.component';
-import { BingoBoardComponent } from './bingo-board/bingo-board.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { SongListService } from './song-list.service';
@@ -20,7 +19,6 @@ import { UserService } from './user.service';
   declarations: [
     AppComponent,
     PreviousListsComponent,
-    BingoBoardComponent,
     WelcomeComponent,
     CategoryListComponent,
     ResultComponent,
