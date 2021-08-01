@@ -84,7 +84,6 @@ export class ResultComponent implements OnInit {
             100, 80, 60, 40, 20,
           ];
           this.bingoBoard = result;
-          await this.songlistApi.updateCurrentIndex();
 
           const a: Promise<MarkedBoardLineItem>[] = this.bingoBoard.map((bli, index) => {
             bli.placement = runningCount[index];
