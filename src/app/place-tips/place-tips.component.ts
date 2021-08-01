@@ -86,6 +86,7 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
   private async setCurrentTip(catName: string) {
     this.userTips.user = await this.userService.getCurrentUser()
     this.userTips.category = categories.filter(cat => cat.name === catName)[0];
+    this.isBeforeDeadline = !this.userTips.category.isClosed
     this.userService.getUserTips(catName)
       .then(value => {
         if (value['1_1']) {

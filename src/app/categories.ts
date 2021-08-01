@@ -39,7 +39,7 @@ export const categories: Array<Category> = [
   {
     displayName: 'On The Road - Die 100 besten Mobilitätslieder',
     name: 'Top100Mobility',
-    isClosed: false,
+    isClosed: true,
     imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/202106/musiksommer_mobilitaet_16_92.png.png/quality=205/rendition=musiksommer_mobilitaet_4_3.png/size=300x170.png'
   },
   {
