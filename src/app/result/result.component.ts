@@ -62,7 +62,7 @@ export class ResultComponent implements OnInit {
     this.userTips.user = await this.userService.getCurrentUser()
     if( this.userTips.user ) {
     this.userService.getUserTips( 'Top100Mobility' )
-          .then(( value ) => {
+          .then(async ( value ) => {
             const result: MarkedBoardLineItem[] = []
             for(let i = 1; i < 6; i++) {
               for(let j = 1; j < 6; j++) {
@@ -78,7 +78,8 @@ export class ResultComponent implements OnInit {
               100, 80, 60, 40, 20,
             ];
             this.bingoBoard = result;
-      
+            await this.songlistApi.updateCurrentIndex();
+
             const a: Promise<MarkedBoardLineItem>[] = this.bingoBoard.map(( bli, index ) => {
               bli.placement = runningCount[index];
               return new Promise((resolve, reject) => {

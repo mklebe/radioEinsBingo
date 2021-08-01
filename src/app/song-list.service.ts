@@ -25,6 +25,10 @@ export class SongListService {
     return this.httpClient.get(`${this.url}/${category}/${artist}/${song}`)
   }
 
+  async updateCurrentIndex(): Promise<any> {
+    return this.httpClient.get(`${this.url}/Top100Mobility/updateindex`).toPromise()
+  }
+
   async updatePastIndicies(): Promise<any> {
     Promise.all([
       this.httpClient.get(`${this.url}/Top100Family/updateindex`).toPromise(),
