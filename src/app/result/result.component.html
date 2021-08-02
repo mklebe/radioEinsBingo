@@ -7,7 +7,15 @@
   <li>40 - 21</li>
   <li>20 - 1</li>
   <li *ngFor="let b of bingoBoard">
-    <p [ngClass]="{ 'success': b.marker === markerTypes.CORRECT_COLUMN, 'warning': b.marker === markerTypes.IN_LIST}">
+    <p 
+      [ngClass]="{
+        'success': b.marker === markerTypes.CORRECT_COLUMN,
+        'warning': b.marker === markerTypes.IN_LIST,
+        'joker': b.marker === markerTypes.IS_JOKER
+      }"
+      class="result-element"
+      (click)="setJoker(b)"
+    >
       {{ b.artist }} - {{ b.song }}
       <span *ngIf="b.placement">
         <br />
@@ -16,6 +24,10 @@
     </p>
   </li>
 </ul>
+<p *ngIf="!isJokerSet">
+  Hey, ich sehe du hast noch keinen Joker gesetzt! Du kannst das entsprechende Feld
+  anklicken um den Joker zu setzen!
+</p>
 
 <h2>Die aktuelle Liste</h2>
 

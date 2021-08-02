@@ -2,6 +2,7 @@ export interface BoardLineItem {
   artist: string;
   song: string;
   placement: number;
+  boardPosition?: string;
 }
 
 export interface Board {

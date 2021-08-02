@@ -15,12 +15,23 @@ li
 
 p
   width: 100%
+  margin: 0
 
 .success
   background: lime
 
 .warning
   background: yellow
+
+.result-element
+  &.joker
+    background-color: rgba(255, 131, 0, 1)
+
+  &:not(.success):not(.warning):hover
+    background-color: rgba(255, 131, 0, .3)
+    cursor: pointer
+
+
 
 button
   width: 45%

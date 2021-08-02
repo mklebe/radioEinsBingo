@@ -35,7 +35,19 @@ export class UserService {
   public async setUserTip(category: string, userTip: Record<string, string>): Promise<any> {
     const userName = await this.getCurrentUser()
     const categoryReference = this.db.object(`Top100Lists/${category}/${userName}`)
-    categoryReference.update( userTip );
+    return categoryReference.update( userTip );
+  }
+
+  public async setUserJoker(category: string, field: string): Promise<any> {
+    const userName = await this.getCurrentUser()
+    const categoryReference = this.db.object(`Top100Lists/${category}/${userName}`)
+    return categoryReference.update( {'joker': field} );
+  }
+
+  public async unsetJoker(category: string): Promise<any> {
+    const userName = await this.getCurrentUser()
+    const categoryReference = this.db.object(`Top100Lists/${category}/${userName}/joker`)
+    categoryReference.remove()
   }
 
   public getCurrentUser(): Promise<string> {

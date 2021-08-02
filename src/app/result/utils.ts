@@ -3,7 +3,8 @@ import { BoardLineItem } from "../previous-lists/lists"
 export enum BoardMarker {
   NOT_LISTED,
   IN_LIST,
-  CORRECT_COLUMN
+  CORRECT_COLUMN,
+  IS_JOKER
 }
 
 export interface MarkedBoardLineItem extends BoardLineItem {

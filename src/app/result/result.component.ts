@@ -15,6 +15,7 @@ export class ResultComponent implements OnInit {
   bingoBoard: Array<MarkedBoardLineItem> = [];
 
   billboard: Array<BoardLineItem> = []
+  isJokerSet: boolean = false;
 
   markerTypes = BoardMarker
 
@@ -45,6 +46,7 @@ export class ResultComponent implements OnInit {
       }
     })
     this.result += calculateBingoPoints(this.bingoBoard);
+    this.isJokerSet = this.bingoBoard.filter( i => i.marker === BoardMarker.IS_JOKER).length > 0
   }
 
   private convertStringToMarkedBoardLineItem(entry: string): MarkedBoardLineItem {
@@ -61,6 +63,31 @@ export class ResultComponent implements OnInit {
     }
   }
 
+  async setJoker(item: MarkedBoardLineItem) {
+    if( item.marker === BoardMarker.IS_JOKER ) {
+      item.marker = BoardMarker.NOT_LISTED
+      await this.userService.unsetJoker('Top100Mobility')
+      this.updateResult()
+      return
+    } else if( item.marker !== BoardMarker.NOT_LISTED ) {
+      return
+    }
+
+    let joker = this.bingoBoard
+      .filter((b) => b.marker === BoardMarker.IS_JOKER )[0]
+    if(joker)
+      joker.marker = BoardMarker.NOT_LISTED
+
+    if( item.marker === BoardMarker.NOT_LISTED ) {
+      item.marker = BoardMarker.IS_JOKER
+    } else if( item.marker === BoardMarker.IS_JOKER ) {
+      item.marker = BoardMarker.NOT_LISTED
+    }
+
+    await this.userService.setUserJoker('Top100Mobility', item.boardPosition || '')
+    this.updateResult()
+  }
+
   async ngOnInit(): Promise<void> {
     this.songlistApi.getSongList('Top100Mobility').subscribe((data) => {
       this.billboard = data;
@@ -69,10 +96,18 @@ export class ResultComponent implements OnInit {
     if (this.userTips.user) {
       this.userService.getUserTips('Top100Mobility')
         .then(async (value) => {
+          console.log(value)
           const result: MarkedBoardLineItem[] = []
           for (let i = 1; i < 6; i++) {
             for (let j = 1; j < 6; j++) {
-              result.push(this.convertStringToMarkedBoardLineItem(value[`${j}_${i}`]));
+              const mbli = this.convertStringToMarkedBoardLineItem(value[`${j}_${i}`]);
+              mbli.boardPosition = `${j}_${i}`;
+
+              if(value.joker == `${j}_${i}`) {
+                mbli.marker = BoardMarker.IS_JOKER
+              }
+
+              result.push( mbli );
             }
           }
 
@@ -99,7 +134,6 @@ export class ResultComponent implements OnInit {
                   }
                   bli.placement = foundItem.placement
                 } else {
-                  bli.marker = BoardMarker.NOT_LISTED
                   bli.placement = 0
                 }
                 resolve(bli)
