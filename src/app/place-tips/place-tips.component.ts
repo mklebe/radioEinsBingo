@@ -26,9 +26,11 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
   }
 
   notification: string = '';
+  numberOfSetTips: number = 0;
 
   bingoBoard: FormGroup;
-  isBeforeDeadline: boolean = true
+  isBeforeDeadline: boolean = true;
+  motivationsMap: Array<string> = ['']
 
   private navigationSubscription: Subscription;
 
@@ -65,6 +67,16 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
       '5_5': new FormControl(''),
     });
 
+    this.bingoBoard.valueChanges.subscribe((object: Object) => {
+      let numberOfTouchedField = 0;
+      for (const [key, value] of Object.entries(object)) {
+        if( value !== '' ) {
+          ++numberOfTouchedField;
+        }
+      }
+      this.numberOfSetTips = numberOfTouchedField;
+    })
+
     this.navigationSubscription = this.router.events.subscribe(async (event) => {
       if (event instanceof NavigationEnd) {
         const catName = this.route.snapshot.paramMap.get('name')
@@ -76,6 +88,24 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
         this.setCurrentTip(catName)
       }
     })
+  }
+
+  getMotivationText(): string {
+    const texts: Array<string> = [
+      'Es ist ein wundervoller Tag mit dem Tippen zu beginnen, findest du nicht auch?',
+      `Ja, du hast deine erste(n) ${this.numberOfSetTips} abgegeben. Bleib am Ball!`,
+      `Sehr gut! Mit den weiter so! Du hast bereits ${this.numberOfSetTips} platziert!`,
+      `Du hast bereits ${this.numberOfSetTips} abgegeben, wenn du 25 Tipps abgibst stehen deine Chancen am besten.`,
+      'Super, du hast das maximum an Tipps abgegeben! Damit bist du bestimmt ganz vorne mit dabei!',
+    ]
+    const motivationCohort = this.numberOfSetTips === 0
+      ? 0
+      : this.numberOfSetTips < 9
+        ? 1 : this.numberOfSetTips < 18
+          ? 2 : this.numberOfSetTips < 25
+            ? 3 : 4
+
+    return texts[motivationCohort]
   }
 
   private async setCurrentTip(catName: string) {

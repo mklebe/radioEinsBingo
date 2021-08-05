@@ -3,6 +3,8 @@
 <a routerLink="/kategorien">zurück zu der Kategorieliste</a>
 <h1>{{ userTips.category.displayName }}</h1>
 
+<h3>{{ getMotivationText() }}</h3>
+
 <form [formGroup]="bingoBoard" (ngSubmit)="submitForm()">
   <table>
     <tr>
