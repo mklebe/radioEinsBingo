@@ -5,6 +5,8 @@ import { SongListService } from '../song-list.service';
 import { UserService } from '../user.service';
 import { BoardMarker, calculateBingoPoints, MarkedBoardLineItem } from './utils';
 
+const CURRENT_CATEGORY = 'Top100Instrumentals'
+
 @Component({
   selector: 'app-result',
   templateUrl: './result.component.html',
@@ -66,7 +68,7 @@ export class ResultComponent implements OnInit {
   async setJoker(item: MarkedBoardLineItem) {
     if( item.marker === BoardMarker.IS_JOKER ) {
       item.marker = BoardMarker.NOT_LISTED
-      await this.userService.unsetJoker('Top100Mobility')
+      await this.userService.unsetJoker(CURRENT_CATEGORY)
       this.updateResult()
       return
     } else if( item.marker !== BoardMarker.NOT_LISTED ) {
@@ -84,17 +86,17 @@ export class ResultComponent implements OnInit {
       item.marker = BoardMarker.NOT_LISTED
     }
 
-    await this.userService.setUserJoker('Top100Mobility', item.boardPosition || '')
+    await this.userService.setUserJoker(CURRENT_CATEGORY, item.boardPosition || '')
     this.updateResult()
   }
 
   async ngOnInit(): Promise<void> {
-    this.songlistApi.getSongList('Top100Mobility').subscribe((data) => {
+    this.songlistApi.getSongList(CURRENT_CATEGORY).subscribe((data) => {
       this.billboard = data;
     })
     this.userTips.user = await this.userService.getCurrentUser()
     if (this.userTips.user) {
-      this.userService.getUserTips('Top100Mobility')
+      this.userService.getUserTips(CURRENT_CATEGORY)
         .then(async (value) => {
           console.log(value)
           const result: MarkedBoardLineItem[] = []
@@ -123,7 +125,7 @@ export class ResultComponent implements OnInit {
           const a: Promise<MarkedBoardLineItem>[] = this.bingoBoard.map((bli, index) => {
             bli.placement = runningCount[index];
             return new Promise((resolve, reject) => {
-              this.songlistApi.searchSong('Top100Mobility', bli.artist, bli.song).subscribe((result) => {
+              this.songlistApi.searchSong(CURRENT_CATEGORY, bli.artist, bli.song).subscribe((result) => {
                 if (result.length > 0) {
                   const foundItem = result[0];
                   const a = bli.placement - foundItem.placement
