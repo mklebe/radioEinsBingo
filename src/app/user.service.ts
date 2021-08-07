@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
-import { Observable } from 'rxjs';
+import { BingoBoard } from './interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,8 @@ export class UserService {
     this.itemRef = this.db.object('Top100Lists')
   }
 
-  public getUserTips(category: string): Promise<any> {
-    const currentUser = localStorage.getItem('username')
+  public async getUserTips(category: string): Promise<any> {
+    const currentUser = await this.getCurrentUser()
 
     return new Promise((resolve, reject) => {
       if(!category || !currentUser) {
@@ -28,6 +28,34 @@ export class UserService {
         const categoryList = payload[category] || {}
 
         resolve(categoryList[currentUser])
+      })
+    })
+  }
+
+  public async getAllTipps(category: string): Promise<Array<BingoBoard>> {
+    return new Promise((resolve, reject) => {
+      if(!category) {
+        reject();
+        return
+      }
+      this.itemRef.snapshotChanges().subscribe( action => {
+
+        const payload = action?.payload?.val() || {}
+        const categoryList: { string: { string: string } } = payload[category] || {}
+
+        const allBoards: Array<BingoBoard> = []
+        for (const [key, value] of Object.entries(categoryList)) {
+          const table: Array<string> = []
+          for (const [key, songLine] of Object.entries(value)) {
+            table.push(songLine)
+          }
+          allBoards.push({
+            player: key,
+            table
+          })
+        }
+
+        resolve(allBoards)
       })
     })
   }
@@ -51,6 +79,6 @@ export class UserService {
   }
 
   public getCurrentUser(): Promise<string> {
-    return Promise.resolve( localStorage.getItem('username') || '' )
+    return Promise.resolve( (localStorage.getItem('username') || '').replace(/\s/g, '') )
   }
 }

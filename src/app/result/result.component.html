@@ -1,3 +1,5 @@
+<span class="note">{{ notification }}</span>
+
 <h2>Ergebnisse</h2>
 <p>Deine Punkte: {{ this.result }}</p>
 <ul>
@@ -29,8 +31,38 @@
   anklicken um den Joker zu setzen!
 </p>
 
-<h2>Die aktuelle Liste</h2>
+<h2>Die Listen der anderen Spieler</h2>
+<div class="otherUserList">
+  <span 
+    class="otherUserNames"
+    *ngFor="let board of otherPlayersBingoBoards"
+    (click)="showOtherUsersBoard(board)">
+    {{ board.player }} ({{ board.points }})
+  </span>
+</div>
+<div *ngIf="!!shownOtherUsersBoard">
+  <h4>Die Liste von: {{ shownOtherUsersBoard.player }}</h4>
+  <ul>
+    <li *ngFor="let b of shownOtherUsersBoard.lines">
+      <p 
+        [ngClass]="{
+          'success': b.marker === markerTypes.CORRECT_COLUMN,
+          'warning': b.marker === markerTypes.IN_LIST,
+          'joker': b.marker === markerTypes.IS_JOKER
+        }"
+        class="result-element"
+      >
+        {{ b.artist }} - {{ b.song }}
+        <span *ngIf="b.placement">
+          <br />
+          Gefunden auf {{ b.placement }}
+        </span>
+      </p>
+    </li>
+  </ul>
+</div>
 
+<h2>Die aktuelle Liste</h2>
 <p *ngFor="let b of billboard">
   {{ b.placement }}. {{ b.artist }} - {{ b.song }}
 </p>

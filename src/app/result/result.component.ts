@@ -1,11 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { UserTip } from '../interfaces';
+import { BingoBoard, UserTip } from '../interfaces';
 import { BoardLineItem } from '../previous-lists/lists';
 import { SongListService } from '../song-list.service';
 import { UserService } from '../user.service';
 import { BoardMarker, calculateBingoPoints, MarkedBoardLineItem } from './utils';
 
 const CURRENT_CATEGORY = 'Top100Instrumentals'
+
+interface OtherPlayersBingoBoard {
+  player: string;
+  lines: Array<MarkedBoardLineItem>;
+  points: number;
+}
 
 @Component({
   selector: 'app-result',
@@ -15,9 +21,14 @@ const CURRENT_CATEGORY = 'Top100Instrumentals'
 export class ResultComponent implements OnInit {
   result: number = 0;
   bingoBoard: Array<MarkedBoardLineItem> = [];
+  notification: string = '';
+
+  otherPlayersBingoBoards: Array<OtherPlayersBingoBoard> = [];
 
   billboard: Array<BoardLineItem> = []
   isJokerSet: boolean = false;
+
+  shownOtherUsersBoard: OtherPlayersBingoBoard | null = null;
 
   markerTypes = BoardMarker
 
@@ -90,6 +101,78 @@ export class ResultComponent implements OnInit {
     this.updateResult()
   }
 
+  private setBingoBoardValues(value: any) {
+    const result: MarkedBoardLineItem[] = []
+    for (let i = 1; i < 6; i++) {
+      for (let j = 1; j < 6; j++) {
+        const mbli = this.convertStringToMarkedBoardLineItem(value[`${j}_${i}`]);
+        mbli.boardPosition = `${j}_${i}`;
+
+        if(value.joker == `${j}_${i}`) {
+          mbli.marker = BoardMarker.IS_JOKER
+        }
+
+        result.push( mbli );
+      }
+    }
+    this.bingoBoard = result;
+  }
+
+  private setPlacementForMarkedBoardLineItem(inputMbli: MarkedBoardLineItem, result: any): MarkedBoardLineItem {
+    const outputMbli = {...inputMbli}
+    if (result.length > 0) {
+      const foundItem = result[0];
+      const placementDelta = outputMbli.placement - foundItem.placement
+      const isPlacedInRightColumn = placementDelta >= 0 && placementDelta < 20
+      if (isPlacedInRightColumn) {
+        outputMbli.marker = BoardMarker.CORRECT_COLUMN
+      } else {
+        outputMbli.marker = BoardMarker.IN_LIST
+      }
+      outputMbli.placement = foundItem.placement
+    } else {
+      outputMbli.placement = 0
+    }
+    return outputMbli;
+  }
+
+  private getPlacementForBoard(board: Array<MarkedBoardLineItem>): Promise<MarkedBoardLineItem>[] {
+    let runningCount = [
+      100, 80, 60, 40, 20,
+      100, 80, 60, 40, 20,
+      100, 80, 60, 40, 20,
+      100, 80, 60, 40, 20,
+      100, 80, 60, 40, 20,
+    ];
+
+    const result: Promise<MarkedBoardLineItem>[] = board.map((bli, index) => {
+      bli.placement = runningCount[index];
+      return new Promise((resolve, reject) => {
+        if(!!bli.artist || !!bli.song) {
+          this.songlistApi.searchSong(CURRENT_CATEGORY, bli.artist, bli.song).subscribe((result) => {
+            resolve(
+              this.setPlacementForMarkedBoardLineItem(bli, result)
+            )
+          })
+        } else {
+          const a: MarkedBoardLineItem = {
+            artist: '',
+            song: '',
+            marker: BoardMarker.NOT_LISTED,
+            placement: 0,
+          }
+          reject(a)
+        }
+      })
+    })
+
+    return result;
+  }
+
+  showOtherUsersBoard( board: OtherPlayersBingoBoard ): void {
+    this.shownOtherUsersBoard = board;
+  }
+
   async ngOnInit(): Promise<void> {
     this.songlistApi.getSongList(CURRENT_CATEGORY).subscribe((data) => {
       this.billboard = data;
@@ -98,52 +181,28 @@ export class ResultComponent implements OnInit {
     if (this.userTips.user) {
       this.userService.getUserTips(CURRENT_CATEGORY)
         .then(async (value) => {
-          console.log(value)
-          const result: MarkedBoardLineItem[] = []
-          for (let i = 1; i < 6; i++) {
-            for (let j = 1; j < 6; j++) {
-              const mbli = this.convertStringToMarkedBoardLineItem(value[`${j}_${i}`]);
-              mbli.boardPosition = `${j}_${i}`;
-
-              if(value.joker == `${j}_${i}`) {
-                mbli.marker = BoardMarker.IS_JOKER
-              }
-
-              result.push( mbli );
-            }
-          }
-
-          let runningCount = [
-            100, 80, 60, 40, 20,
-            100, 80, 60, 40, 20,
-            100, 80, 60, 40, 20,
-            100, 80, 60, 40, 20,
-            100, 80, 60, 40, 20,
-          ];
-          this.bingoBoard = result;
-
-          const a: Promise<MarkedBoardLineItem>[] = this.bingoBoard.map((bli, index) => {
-            bli.placement = runningCount[index];
-            return new Promise((resolve, reject) => {
-              this.songlistApi.searchSong(CURRENT_CATEGORY, bli.artist, bli.song).subscribe((result) => {
-                if (result.length > 0) {
-                  const foundItem = result[0];
-                  const a = bli.placement - foundItem.placement
-                  if (a >= 0 && a < 20) {
-                    bli.marker = BoardMarker.CORRECT_COLUMN
-                  } else {
-                    bli.marker = BoardMarker.IN_LIST
-                  }
-                  bli.placement = foundItem.placement
-                } else {
-                  bli.placement = 0
-                }
-                resolve(bli)
-              })
+          this.setBingoBoardValues(value);
+          const checksForPlacement: Promise<MarkedBoardLineItem>[] = this.getPlacementForBoard(this.bingoBoard)
+          Promise.all(checksForPlacement).then(() => this.updateResult())
+            .catch((e) => {
+              this.notification = "Error: Es trat ein Fehler im Abrufen Titel Platzierung auf. Bitte kontaktieren Sie die Administrator."
+              window.setInterval(() => {
+                this.notification = '';
+              }, 5000)
             })
-          })
+        })
 
-          Promise.all(a).then(() => this.updateResult())
+      this.userService.getAllTipps(CURRENT_CATEGORY)
+        .then(( allBingoBoards ) => {
+          this.otherPlayersBingoBoards = allBingoBoards
+          .filter( board => board.player !== this.userTips.user)
+          .map((board) => {
+            return {
+              player: board.player,
+              lines: board.table.map( bli => this.convertStringToMarkedBoardLineItem(bli)),
+              points: 0,
+            }
+          });
         })
     }
   }

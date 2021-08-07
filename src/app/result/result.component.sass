@@ -13,6 +13,20 @@ li
   flex-wrap: wrap
   text-align: center
 
+.note
+  padding: .5rem
+  background-color: red
+  color: white
+  text-align: center
+  position: fixed
+  top: 0
+  width: 100%
+  left: 0
+  right: 0
+
+  &:empty
+    display: none
+
 p
   width: 100%
   margin: 0
@@ -31,6 +45,26 @@ p
     background-color: rgba(255, 131, 0, .3)
     cursor: pointer
 
+.otherUserList
+  display: grid
+  gap: 8px
+  grid-template-columns: repeat(3, 1fr)
+
+  @media (min-width: 620px)
+    grid-template-columns: repeat(4, 1fr)
+
+  @media (min-width: 960px)
+    grid-template-columns: repeat(6, 1fr)
+
+.otherUserNames
+  cursor: pointer
+  display: inline-block
+  padding: 8px
+  box-shadow: 0 0 3px #ccc
+  text-align: center
+
+  &:hover
+    background-color: #ccc
 
 
 button
