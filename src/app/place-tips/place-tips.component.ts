@@ -65,6 +65,7 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
       '3_5': new FormControl(''),
       '4_5': new FormControl(''),
       '5_5': new FormControl(''),
+      'joker': new FormControl(''),
     });
 
     this.bingoBoard.valueChanges.subscribe((object: Object) => {
@@ -131,10 +132,14 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
       return
     }
 
+    window.onblur = () => {
+      this.saveForm();
+    }
+
     this.setCurrentTip(catName);
   }
 
-  submitForm() {
+  private saveForm(): void {
     this.userService.setUserTip(this.userTips.category.name, this.bingoBoard.value)
       .then(() => {
         this.notification = "Liste ist gespeichert!"
@@ -143,6 +148,10 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
           this.notification = '';
         }, 3000)
       })
+  }
+
+  submitForm() {
+    this.saveForm();
   }
 
 }
