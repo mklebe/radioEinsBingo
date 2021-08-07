@@ -65,7 +65,6 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
       '3_5': new FormControl(''),
       '4_5': new FormControl(''),
       '5_5': new FormControl(''),
-      'joker': new FormControl(''),
     });
 
     this.bingoBoard.valueChanges.subscribe((object: Object) => {
@@ -94,9 +93,9 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
   getMotivationText(): string {
     const texts: Array<string> = [
       'Es ist ein wundervoller Tag mit dem Tippen zu beginnen, findest du nicht auch?',
-      `Ja, du hast deine erste(n) ${this.numberOfSetTips} abgegeben. Bleib am Ball!`,
-      `Sehr gut! Mit den weiter so! Du hast bereits ${this.numberOfSetTips} platziert!`,
-      `Du hast bereits ${this.numberOfSetTips} abgegeben, wenn du 25 Tipps abgibst stehen deine Chancen am besten.`,
+      `Ja, du hast deine erste(n) ${this.numberOfSetTips} Tipps abgegeben. Bleib am Ball!`,
+      `Sehr gut! Mit den weiter so! Du hast bereits ${this.numberOfSetTips} Tipps platziert!`,
+      `Du hast bereits ${this.numberOfSetTips} Tipps abgegeben, wenn du 25 Tipps abgibst stehen deine Chancen am besten.`,
       'Super, du hast das maximum an Tipps abgegeben! Damit bist du bestimmt ganz vorne mit dabei!',
     ]
     const motivationCohort = this.numberOfSetTips === 0
