@@ -41,17 +41,18 @@ export class UserService {
       this.itemRef.snapshotChanges().subscribe( action => {
 
         const payload = action?.payload?.val() || {}
-        const categoryList: { string: { string: string } } = payload[category] || {}
+        const categoryList: Record<string, Record<string, string>> = payload[category] || {}
 
         const allBoards: Array<BingoBoard> = []
-        for (const [key, value] of Object.entries(categoryList)) {
+        for (const [player, playerSelection] of Object.entries(categoryList)) {
           const table: Array<string> = []
-          for (const [key, songLine] of Object.entries(value)) {
+          for (const [key, songLine] of Object.entries(playerSelection)) {
             table.push(songLine)
           }
           allBoards.push({
-            player: key,
-            table
+            player,
+            table,
+            joker: playerSelection.joker
           })
         }
 

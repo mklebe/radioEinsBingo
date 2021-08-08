@@ -9,4 +9,5 @@ export interface UserTip {
 export interface BingoBoard {
   player: string;
   table: Array<string>;
+  joker?: string;
 }

@@ -10,7 +10,7 @@ declare global {
   providedIn: 'root'
 })
 export class SongListService {
-  private url: string = 'https://top100-bingo.herokuapp.com/songlist';
+  private url: string = 'https://radio-bingo-backend.herokuapp.com/songlist';
   constructor(
     private readonly httpClient: HttpClient
   ) {

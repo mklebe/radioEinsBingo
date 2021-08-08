@@ -48,17 +48,29 @@ export class ResultComponent implements OnInit {
     private readonly songlistApi: SongListService,
   ) { }
 
-  private updateResult() {
-    this.result = 0
-    this.bingoBoard.forEach((mbli) => {
+  private calculateRegularPoints(board: Array<MarkedBoardLineItem>): number {
+    let result = 0;
+    board.forEach((mbli) => {
       if (mbli.marker === BoardMarker.CORRECT_COLUMN) {
-        this.result += 3
+        result += 3
       }
       if (mbli.marker === BoardMarker.IN_LIST) {
-        this.result += 1
+        result += 1
       }
     })
-    this.result += calculateBingoPoints(this.bingoBoard);
+
+    return result;
+  }
+
+  private calculatePlayerScore(board: Array<MarkedBoardLineItem>): number {
+    let result = 0;
+    result += this.calculateRegularPoints(board)
+    result += calculateBingoPoints(board);
+    return result
+  }
+
+  private updateResult() {
+    this.result = this.calculatePlayerScore(this.bingoBoard)
     this.isJokerSet = this.bingoBoard.filter( i => i.marker === BoardMarker.IS_JOKER).length > 0
   }
 
@@ -101,7 +113,7 @@ export class ResultComponent implements OnInit {
     this.updateResult()
   }
 
-  private setBingoBoardValues(value: any) {
+  private setBingoBoardValues(value: any): Array<MarkedBoardLineItem> {
     const result: MarkedBoardLineItem[] = []
     for (let i = 1; i < 6; i++) {
       for (let j = 1; j < 6; j++) {
@@ -115,7 +127,7 @@ export class ResultComponent implements OnInit {
         result.push( mbli );
       }
     }
-    this.bingoBoard = result;
+    return result;
   }
 
   private setPlacementForMarkedBoardLineItem(inputMbli: MarkedBoardLineItem, result: any): MarkedBoardLineItem {
@@ -181,9 +193,13 @@ export class ResultComponent implements OnInit {
     if (this.userTips.user) {
       this.userService.getUserTips(CURRENT_CATEGORY)
         .then(async (value) => {
-          this.setBingoBoardValues(value);
+          const currentUsersBoard: MarkedBoardLineItem[] = this.setBingoBoardValues(value);
+          this.bingoBoard = currentUsersBoard;
           const checksForPlacement: Promise<MarkedBoardLineItem>[] = this.getPlacementForBoard(this.bingoBoard)
-          Promise.all(checksForPlacement).then(() => this.updateResult())
+          Promise.all(checksForPlacement).then((e) => {
+            this.bingoBoard = e
+            this.updateResult()
+          })
             .catch((e) => {
               this.notification = "Error: Es trat ein Fehler im Abrufen Titel Platzierung auf. Bitte kontaktieren Sie die Administrator."
               window.setInterval(() => {
@@ -193,16 +209,30 @@ export class ResultComponent implements OnInit {
         })
 
       this.userService.getAllTipps(CURRENT_CATEGORY)
-        .then(( allBingoBoards ) => {
-          this.otherPlayersBingoBoards = allBingoBoards
-          .filter( board => board.player !== this.userTips.user)
-          .map((board) => {
-            return {
-              player: board.player,
-              lines: board.table.map( bli => this.convertStringToMarkedBoardLineItem(bli)),
-              points: 0,
-            }
-          });
+        .then(async ( allBingoBoards ) => {
+          allBingoBoards
+            .filter( board => board.player !== this.userTips.user)
+            .map((board) => {
+              return {
+                player: board.player,
+                lines: board.table
+                  .filter( bli => bli !== 'joker' )
+                  .map( bli => this.convertStringToMarkedBoardLineItem(bli)),
+                points: 0,
+              }
+            }).map((b) => {
+              return {
+                player: b.player,
+                points: 0,
+                lines: this.getPlacementForBoard(b.lines),
+              }
+            }).map(async b => {
+              let z = await Promise.all(b.lines).then(a => {
+                return {...b, ...{ lines: a }}
+              })
+              z.points = this.calculatePlayerScore(z.lines)
+              this.otherPlayersBingoBoards.push(z)
+            })
         })
     }
   }

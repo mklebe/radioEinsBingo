@@ -40,7 +40,7 @@
     {{ board.player }} ({{ board.points }})
   </span>
 </div>
-<div *ngIf="!!shownOtherUsersBoard">
+<div class="otherPlayersList" *ngIf="!!shownOtherUsersBoard">
   <h4>Die Liste von: {{ shownOtherUsersBoard.player }}</h4>
   <ul>
     <li *ngFor="let b of shownOtherUsersBoard.lines">
@@ -50,7 +50,6 @@
           'warning': b.marker === markerTypes.IN_LIST,
           'joker': b.marker === markerTypes.IS_JOKER
         }"
-        class="result-element"
       >
         {{ b.artist }} - {{ b.song }}
         <span *ngIf="b.placement">
