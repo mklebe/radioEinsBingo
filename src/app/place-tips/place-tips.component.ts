@@ -131,10 +131,6 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
       return
     }
 
-    window.onblur = () => {
-      this.saveForm();
-    }
-
     this.setCurrentTip(catName);
   }
 
