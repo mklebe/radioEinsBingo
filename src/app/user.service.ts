@@ -45,9 +45,9 @@ export class UserService {
 
         const allBoards: Array<BingoBoard> = []
         for (const [player, playerSelection] of Object.entries(categoryList)) {
-          const table: Array<string> = []
+          const table: Record<string, string> = {}
           for (const [key, songLine] of Object.entries(playerSelection)) {
-            table.push(songLine)
+            table[key] = songLine
           }
           allBoards.push({
             player,

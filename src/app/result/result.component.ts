@@ -213,11 +213,26 @@ export class ResultComponent implements OnInit {
           allBingoBoards
             .filter( board => board.player !== this.userTips.user)
             .map((board) => {
+              const value = board.table
+              console.log( value )
+              const result: MarkedBoardLineItem[] = []
+              for (let i = 1; i < 6; i++) {
+                for (let j = 1; j < 6; j++) {
+                  const mbli = this.convertStringToMarkedBoardLineItem(value[`${j}_${i}`]);
+                  mbli.boardPosition = `${j}_${i}`;
+
+                  if(value.joker == `${j}_${i}`) {
+                    console.log('### Joker ###')
+                    mbli.marker = BoardMarker.IS_JOKER
+                  }
+
+                  result.push( mbli );
+                }
+              }
+              // return result;
               return {
                 player: board.player,
-                lines: board.table
-                  .filter( bli => bli !== 'joker' )
-                  .map( bli => this.convertStringToMarkedBoardLineItem(bli)),
+                lines: result,
                 points: 0,
               }
             }).map((b) => {

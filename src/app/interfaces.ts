@@ -8,6 +8,6 @@ export interface UserTip {
 
 export interface BingoBoard {
   player: string;
-  table: Array<string>;
+  table: Record<string, string>;
   joker?: string;
 }
