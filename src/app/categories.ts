@@ -7,6 +7,42 @@ export interface Category {
 
 export const categories: Array<Category> = [
   {
+    displayName: 'Platzhalter Woche 1',
+    name: 'Placeholder1',
+    isClosed: false,
+    imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/202106/musiksommer_familie_16_92.png.png/quality=205/size=300x170.png'
+  },
+  {
+    displayName: 'Platzhalter Woche 2',
+    name: 'Placeholder2',
+    isClosed: false,
+    imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/202106/musiksommer_familie_16_92.png.png/quality=205/size=300x170.png'
+  },
+  {
+    displayName: 'Platzhalter Woche 3',
+    name: 'Placeholder3',
+    isClosed: false,
+    imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/202106/musiksommer_familie_16_92.png.png/quality=205/size=300x170.png'
+  },
+  {
+    displayName: 'Platzhalter Woche 4',
+    name: 'Placeholder4',
+    isClosed: false,
+    imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/202106/musiksommer_familie_16_92.png.png/quality=205/size=300x170.png'
+  },
+  {
+    displayName: 'Platzhalter Woche 5',
+    name: 'Placeholder5',
+    isClosed: false,
+    imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/202106/musiksommer_familie_16_92.png.png/quality=205/size=300x170.png'
+  },
+  {
+    displayName: 'Platzhalter Woche 6',
+    name: 'Placeholder6',
+    isClosed: false,
+    imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/202106/musiksommer_familie_16_92.png.png/quality=205/size=300x170.png'
+  },
+  {
     displayName: 'We Are Family - Die 100 besten Familienlieder',
     name: 'Top100Family',
     isClosed: true,
@@ -45,7 +81,7 @@ export const categories: Array<Category> = [
   {
     displayName: 'Instrumentals - Die 100 besten Instrumentallieder',
     name: 'Top100Instrumentals',
-    isClosed: false,
+    isClosed: true,
     imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/202106/musiksommer_instrumental_16_92.png.png/quality=205/rendition=musiksommer_instrumental_4_3.png/size=300x170.png'
   },
 ]
