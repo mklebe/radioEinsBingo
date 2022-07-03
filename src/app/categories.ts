@@ -2,45 +2,56 @@ export interface Category {
   displayName: string;
   name: string;
   isClosed: boolean;
-  imageUrl: string
+  imageUrl: string;
 };
+
+function getImageUrl(catName: string): string {
+
+  return `https://www.radioeins.de/content/dam/rbb/rad/bilder0/${catName}/quality=205/size=300x170.png`
+}
 
 export const categories: Array<Category> = [
   {
-    displayName: 'Platzhalter Woche 1',
-    name: 'Placeholder1',
+    displayName: 'RADIO ON - Die 100 besten Lieder übers RADIO',
+    name: 'Top100Radio',
     isClosed: false,
-    imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/202106/musiksommer_familie_16_92.png.png/quality=205/size=300x170.png'
+    imageUrl: getImageUrl('202207/10_07_radio_16_9.png.png'),
   },
   {
-    displayName: 'Platzhalter Woche 2',
-    name: 'Placeholder2',
+    displayName: "LET'S TALK ABOUT ... - Die 100 besten Lieder übers SEX",
+    name: 'Top100Sex',
     isClosed: false,
-    imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/202106/musiksommer_familie_16_92.png.png/quality=205/size=300x170.png'
+    imageUrl: getImageUrl('202207/17_07_sex_16_9.png.png'),
   },
   {
-    displayName: 'Platzhalter Woche 3',
-    name: 'Placeholder3',
+    displayName: "ICH GEB' GAS - Die 100 besten NDW-Lieder",
+    name: 'Top100NDW',
     isClosed: false,
-    imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/202106/musiksommer_familie_16_92.png.png/quality=205/size=300x170.png'
+    imageUrl: getImageUrl('202207/24_07_NDW_16_9.png.png'),
   },
   {
-    displayName: 'Platzhalter Woche 4',
-    name: 'Placeholder4',
+    displayName: 'FEMALE POWER - Die 100 besten Lieder von Frauen',
+    name: 'Top100Frauen',
     isClosed: false,
-    imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/202106/musiksommer_familie_16_92.png.png/quality=205/size=300x170.png'
+    imageUrl: getImageUrl('202207/31_07_frauen_16_9.png.png'),
   },
   {
-    displayName: 'Platzhalter Woche 5',
-    name: 'Placeholder5',
+    displayName: 'JEANS ON - Die 100 besten Songs über Klamotten',
+    name: 'Top100Clothes',
     isClosed: false,
-    imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/202106/musiksommer_familie_16_92.png.png/quality=205/size=300x170.png'
+    imageUrl: getImageUrl('202207/07_08_jeans_klamotten_16_9.png.png'),
   },
   {
-    displayName: 'Platzhalter Woche 6',
-    name: 'Placeholder6',
+    displayName: 'ROCK HARD - Die 100 besten Hard Rock und Heavy Metal Songs',
+    name: 'Top100Rock',
     isClosed: false,
-    imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/202106/musiksommer_familie_16_92.png.png/quality=205/size=300x170.png'
+    imageUrl: getImageUrl('202207/14_08_hardrock_metal_16_9.png.png'),
+  },
+  {
+    displayName: 'NINETIES - Die 100 besten Songs der 90er-Jahre',
+    name: 'Top100Ninties',
+    isClosed: false,
+    imageUrl: getImageUrl('202207/21_08_90er_16_9.png.png'),
   },
   {
     displayName: 'We Are Family - Die 100 besten Familienlieder',
