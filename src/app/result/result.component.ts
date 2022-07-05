@@ -5,7 +5,7 @@ import { SongListService } from '../song-list.service';
 import { UserService } from '../user.service';
 import { BoardMarker, calculateBingoPoints, MarkedBoardLineItem } from './utils';
 
-const CURRENT_CATEGORY = 'Top100Instrumentals'
+const CURRENT_CATEGORY = 'Top100Radio'
 
 interface OtherPlayersBingoBoard {
   player: string;
@@ -222,7 +222,6 @@ export class ResultComponent implements OnInit {
                   mbli.boardPosition = `${j}_${i}`;
 
                   if(value.joker == `${j}_${i}`) {
-                    console.log('### Joker ###')
                     mbli.marker = BoardMarker.IS_JOKER
                   }
 
