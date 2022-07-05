@@ -135,7 +135,15 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
   }
 
   private saveForm(): void {
-    this.userService.setUserTip(this.userTips.category.name, this.bingoBoard.value)
+    const userTipps = this.bingoBoard.value;
+    const tippsLength = Object.keys(userTipps).reduce((overallLength, currentKey) => {
+      const currentString = userTipps[currentKey];
+      return overallLength + currentString.length
+    }, 0);
+    if( tippsLength === 0 ) {
+      return;
+    }
+    this.userService.setUserTip(this.userTips.category.name, userTipps)
       .then(() => {
         this.notification = "Liste ist gespeichert!"
 
