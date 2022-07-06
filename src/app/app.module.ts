@@ -3,6 +3,9 @@ import { AngularFireModule } from '@angular/fire';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment.prod';
+import { MatTabsModule } from "@angular/material/tabs"
+import { MatButtonModule } from "@angular/material/button"
+import { MatInputModule } from "@angular/material/input"
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,6 +37,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     HttpClientModule,
     NoopAnimationsModule,
+    MatButtonModule,
+    MatTabsModule,
+    MatInputModule
   ],
   providers: [
     SongListService,
