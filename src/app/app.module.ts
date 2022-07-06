@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ResultComponent } from './result/result.component';
 import { PlaceTipsComponent } from './place-tips/place-tips.component';
 import { UserService } from './user.service';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { UserService } from './user.service';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    NoopAnimationsModule,
   ],
   providers: [
     SongListService,
