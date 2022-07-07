@@ -6,6 +6,9 @@ import { environment } from 'src/environments/environment.prod';
 import { MatTabsModule } from "@angular/material/tabs"
 import { MatButtonModule } from "@angular/material/button"
 import { MatInputModule } from "@angular/material/input"
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,7 +42,10 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     NoopAnimationsModule,
     MatButtonModule,
     MatTabsModule,
-    MatInputModule
+    MatInputModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatMenuModule,
   ],
   providers: [
     SongListService,

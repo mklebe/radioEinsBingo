@@ -1,9 +1,30 @@
-<nav>
-  <a routerLink="">Home</a>&nbsp;
-  <a routerLink="/kategorien">Alle Tipprunden</a>&nbsp;
-  <a routerLink="/kategorien/Top100Radio">Aktuelle Tippunde</a>&nbsp;
-  <a routerLink="/ergebnisse">Ergebnisse aktuelle Tipprunde</a>
-</nav>
-
+<mat-toolbar
+  color="primary"
+  class="navigation"
+>
+  <mat-toolbar-row>
+    <a class="homelink" routerLink="">RadioEins Bingo</a>&nbsp;
+    <span class="example-spacer"></span>
+    <button 
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with menu icon"
+      [matMenuTriggerFor]="menu"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-toolbar-row>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <a routerLink="/kategorien">Alle Tipprunden</a>
+    </button>
+    <button mat-menu-item>
+      <a routerLink="/kategorien/Top100Radio">Aktuelle Tipprunde</a>
+    </button>
+    <button mat-menu-item>
+      <a routerLink="/ergebnisse">Ergebnisse aktuelle Tipprunde</a>
+    </button>
+  </mat-menu>
+</mat-toolbar>
 
 <router-outlet></router-outlet>
