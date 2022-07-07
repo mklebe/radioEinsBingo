@@ -20,10 +20,19 @@ td
 input
   height: 24px
   width: 100%
+
+.mat-form-field-wrapper
   margin-bottom: 8px
 
 .first-place
-  border-color: red
+  color: white
+  
+  ::ng-deep
+    .mat-form-field-flex
+      background-color: red
+
+    ::placeholder
+      color: rgba(255, 255, 255, .6 )
 
 .example-full-width
   width: 100%

@@ -30,7 +30,9 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
 
   bingoBoard: FormGroup;
   isBeforeDeadline: boolean = true;
-  motivationsMap: Array<string> = ['']
+  motivationsMap: Array<string> = [''];
+
+  isTippReady: boolean = false;
 
   private navigationSubscription: Subscription;
 
@@ -114,6 +116,7 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
     this.isBeforeDeadline = !this.userTips.category.isClosed
     this.userService.getUserTips(catName)
       .then(value => {
+        this.isTippReady = true;
         if (value['1_1']) {
           this.bingoBoard.setValue(value)
         }
