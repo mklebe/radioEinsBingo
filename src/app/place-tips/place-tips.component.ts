@@ -117,8 +117,17 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
     this.userService.getUserTips(catName)
       .then(value => {
         this.isTippReady = true;
-        if (value['1_1']) {
-          this.bingoBoard.setValue(value)
+        const isAnyTippSet = Object.keys(value)
+          .reduce(
+            (aggregatedLength, currentValue) => aggregatedLength + value[currentValue].length,
+            0
+          ) > 0;
+
+        const tipps = {...value};
+        delete tipps.joker;
+
+        if (isAnyTippSet) {
+          this.bingoBoard.setValue(tipps)
         }
       });
   }
