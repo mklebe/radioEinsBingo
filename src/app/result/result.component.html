@@ -34,7 +34,10 @@
 <h2>Die Listen der anderen Spieler</h2>
 <div class="otherUserList">
   <span 
-    class="otherUserNames"
+    [ngClass]="{
+      'otherUserNames': true,
+      'activeUser': board === shownOtherUsersBoard
+    }"
     *ngFor="let board of otherPlayersBingoBoards"
     (click)="showOtherUsersBoard(board)">
     {{ board.player }} ({{ board.points }})
