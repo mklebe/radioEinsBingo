@@ -14,7 +14,7 @@ export const categories: Array<Category> = [
   {
     displayName: 'RADIO ON - Die 100 besten Lieder übers RADIO',
     name: 'Top100Radio',
-    isClosed: false,
+    isClosed: true,
     imageUrl: getImageUrl('202207/10_07_radio_16_9.png.png'),
   },
   {
