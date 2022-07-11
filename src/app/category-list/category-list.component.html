@@ -1,5 +1,5 @@
 <h2>Kommende Top 100 Listen</h2>
-<ul class="categories" >
+<ul class="categories current" >
   <li *ngFor="let category of upcomingLists">
     <a routerLink="/kategorien/{{category.name}}">
       <article [ngClass]="{'closed': category.isClosed}">
@@ -9,9 +9,10 @@
     </a>
   </li>
 </ul>
-
+<hr />
 <h2>Abgeschlossene Top 100 Listen</h2>
-<ul class="categories" >
+<hr />
+<ul class="categories finished" >
   <li *ngFor="let category of closedLists">
     <a routerLink="/kategorien/{{category.name}}">
       <article [ngClass]="{'closed': category.isClosed}">
