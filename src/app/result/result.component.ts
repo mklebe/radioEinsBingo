@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BingoBoard, UserTip } from '../interfaces';
+import { UserTip } from '../interfaces';
 import { BoardLineItem } from '../previous-lists/lists';
 import { SongListService } from '../song-list.service';
 import { UserService } from '../user.service';

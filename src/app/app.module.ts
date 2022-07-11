@@ -21,6 +21,7 @@ import { ResultComponent } from './result/result.component';
 import { PlaceTipsComponent } from './place-tips/place-tips.component';
 import { UserService } from './user.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { InternalGuardService } from './InternalGuardService';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
   ],
   providers: [
     SongListService,
-    UserService
+    UserService,
+    InternalGuardService
   ],
   bootstrap: [AppComponent]
 })
