@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
+import { Subject } from 'rxjs';
 import { BingoBoard } from './interfaces';
 
 @Injectable({
@@ -7,12 +8,14 @@ import { BingoBoard } from './interfaces';
 })
 export class UserService {
 
-  itemRef: AngularFireObject<any>
+  itemRef: AngularFireObject<any>;
+  private loginSubject: Subject<boolean>;
 
   constructor(
     private readonly db: AngularFireDatabase,
   ) {
-    this.itemRef = this.db.object('Top100Lists')
+    this.itemRef = this.db.object('Top100Lists');
+    this.loginSubject = new Subject<boolean>();
   }
 
   public async getUserTips(category: string): Promise<any> {
@@ -81,5 +84,25 @@ export class UserService {
 
   public getCurrentUser(): Promise<string> {
     return Promise.resolve( (localStorage.getItem('username') || '').replace(/\s/g, '') )
+  }
+
+  public isLoggedIn(): Promise<boolean> {
+    return Promise.resolve( !!localStorage.getItem('username') );
+  }
+
+  public logOut(): Promise<void> {
+    localStorage.removeItem('username');
+    this.loginSubject.next(false);
+    return Promise.resolve();
+  }
+
+  public login( userName: string = '' ): Promise<boolean> {
+    localStorage.setItem( 'username', userName );
+    this.loginSubject.next(true)
+    return Promise.resolve(true)
+  }
+
+  public getIsLoginSubject(): Subject<boolean> {
+    return this.loginSubject;
   }
 }

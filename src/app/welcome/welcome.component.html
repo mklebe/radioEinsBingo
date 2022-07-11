@@ -1,5 +1,5 @@
 <h1>RadioEins Top100 Bingo</h1>
-<ng-container *ngIf="username; else loggedout">
+<ng-container *ngIf="isLoggedIn; else loggedout">
   <p>Hallo {{ username }}!</p>
   <p>Lass uns mit ein paar <a routerLink="/kategorien/Top100Sex">Tipps beginnen</a>!</p>
 </ng-container>
@@ -8,14 +8,18 @@
     Oh wir haben einen neuen Herausforderer! Bitte sag mir wie ich dich ansprechen kann,
     dann kannst du auch gleich loslegen!
   </p>
-  <form (ngSubmit)="register()">
-    <label>
+  <form [formGroup]="loginForm" (ngSubmit)="register()">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Benutzername</mat-label>
       <input
         placeholder="Benutzername"
-        type="text" 
-        [ngModelOptions]="{standalone: true}"
-        [(ngModel)]="tempUsername">
-    </label>
-    <button type="submit">Registrieren</button>
+        matInput
+        type="text"
+        formControlName="username"
+      />
+
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Einloggen</button>
+  
   </form>
 </ng-template>

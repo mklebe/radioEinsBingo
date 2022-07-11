@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,13 @@ import { Component } from '@angular/core';
 })
 
 export class AppComponent {
+  constructor( 
+    private readonly userService: UserService,
+    private readonly router: Router,
+  ) { }
+
+  public async logOut() {
+    await this.userService.logOut();
+    this.router.navigate(['/']);
+  }
 }
