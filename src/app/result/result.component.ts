@@ -5,7 +5,7 @@ import { SongListService } from '../song-list.service';
 import { UserService } from '../user.service';
 import { BoardMarker, calculateBingoPoints, MarkedBoardLineItem } from './utils';
 
-const CURRENT_CATEGORY = 'Top100Radio'
+const CURRENT_CATEGORY = 'Top100Sex'
 
 interface OtherPlayersBingoBoard {
   player: string;
