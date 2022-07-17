@@ -20,7 +20,7 @@ export const categories: Array<Category> = [
   {
     displayName: "LET'S TALK ABOUT ... - Die 100 besten Lieder übers SEX",
     name: 'Top100Sex',
-    isClosed: false,
+    isClosed: true,
     imageUrl: getImageUrl('202207/17_07_sex_16_9.png.png'),
   },
   {
