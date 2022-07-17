@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { UserTip } from '../interfaces';
 import { BoardLineItem } from '../previous-lists/lists';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { SongListService } from '../song-list.service';
 import { UserService } from '../user.service';
 import { BoardMarker, calculateBingoPoints, MarkedBoardLineItem } from './utils';
-
-const CURRENT_CATEGORY = 'Top100Sex'
+import { Subscription } from 'rxjs';
 
 interface OtherPlayersBingoBoard {
   player: string;
@@ -18,10 +18,12 @@ interface OtherPlayersBingoBoard {
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.sass']
 })
-export class ResultComponent implements OnInit {
+export class ResultComponent {
   result: number = 0;
   bingoBoard: Array<MarkedBoardLineItem> = [];
   notification: string = '';
+  private navigationSubscription: Subscription;
+  private currentCategory: string = '';
 
   otherPlayersBingoBoards: Array<OtherPlayersBingoBoard> = [];
 
@@ -44,9 +46,27 @@ export class ResultComponent implements OnInit {
   }
 
   constructor(
+    private route: ActivatedRoute,
+    private router: Router,
     private readonly userService: UserService,
     private readonly songlistApi: SongListService,
-  ) { }
+  ) {
+    this.navigationSubscription = this.router.events.subscribe(async (event) => {
+      if (event instanceof NavigationEnd) {
+        const catName = this.route.snapshot.paramMap.get('name')
+        if (!catName) {
+          this.router.navigate(['/kategorien', {}]);
+          return
+        }
+        this.currentCategory = catName;
+        this.fetchResults();
+      }
+    })
+  }
+
+  async ngOnDestroy() {
+    this.navigationSubscription.unsubscribe();
+  }
 
   private calculateRegularPoints(board: Array<MarkedBoardLineItem>): number {
     let result = 0;
@@ -60,6 +80,11 @@ export class ResultComponent implements OnInit {
     })
 
     return result;
+  }
+
+  updateResultList() {
+    this.songlistApi.updateIndex(this.currentCategory)
+      .then(() => this.fetchResults());
   }
 
   private calculatePlayerScore(board: Array<MarkedBoardLineItem>): number {
@@ -91,7 +116,7 @@ export class ResultComponent implements OnInit {
   async setJoker(item: MarkedBoardLineItem) {
     if( item.marker === BoardMarker.IS_JOKER ) {
       item.marker = BoardMarker.NOT_LISTED
-      await this.userService.unsetJoker(CURRENT_CATEGORY)
+      await this.userService.unsetJoker(this.currentCategory)
       this.updateResult()
       return
     } else if( item.marker !== BoardMarker.NOT_LISTED ) {
@@ -109,7 +134,7 @@ export class ResultComponent implements OnInit {
       item.marker = BoardMarker.NOT_LISTED
     }
 
-    await this.userService.setUserJoker(CURRENT_CATEGORY, item.boardPosition || '')
+    await this.userService.setUserJoker(this.currentCategory, item.boardPosition || '')
     this.updateResult()
   }
 
@@ -161,7 +186,7 @@ export class ResultComponent implements OnInit {
       bli.placement = runningCount[index];
       return new Promise((resolve, reject) => {
         if(!!bli.artist || !!bli.song) {
-          this.songlistApi.searchSong(CURRENT_CATEGORY, bli.artist, bli.song).subscribe((result) => {
+          this.songlistApi.searchSong(this.currentCategory, bli.artist, bli.song).subscribe((result) => {
             resolve(
               this.setPlacementForMarkedBoardLineItem(bli, result)
             )
@@ -185,13 +210,13 @@ export class ResultComponent implements OnInit {
     this.shownOtherUsersBoard = board;
   }
 
-  async ngOnInit(): Promise<void> {
-    this.songlistApi.getSongList(CURRENT_CATEGORY).subscribe((data) => {
+  private async fetchResults(): Promise<void> {
+    this.songlistApi.getSongList(this.currentCategory).subscribe((data) => {
       this.billboard = data;
     })
     this.userTips.user = await this.userService.getCurrentUser()
     if (this.userTips.user) {
-      this.userService.getUserTips(CURRENT_CATEGORY)
+      this.userService.getUserTips(this.currentCategory)
         .then(async (value) => {
           const currentUsersBoard: MarkedBoardLineItem[] = this.setBingoBoardValues(value);
           this.bingoBoard = currentUsersBoard;
@@ -208,7 +233,7 @@ export class ResultComponent implements OnInit {
             })
         })
 
-      this.userService.getAllTipps(CURRENT_CATEGORY)
+      this.userService.getAllTipps(this.currentCategory)
         .then(async ( allBingoBoards ) => {
           allBingoBoards
             .filter( board => board.player !== this.userTips.user)

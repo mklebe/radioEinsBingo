@@ -5,6 +5,8 @@
 
 <h3>{{ getMotivationText() }}</h3>
 
+<a routerLink="/kategorien/{{userTips.category.name}}/ergebnisse">Zeige Ergebnisse für diese Kategorie</a>
+
 <form [formGroup]="bingoBoard" (ngSubmit)="submitForm()">
   <div style="background-color: red; color: white; padding: 8px; margin-bottom: 16px">
     <p>Das Feld mit dem Roten Hintergrund ist dein Tipp für die Nummer 1!</p>

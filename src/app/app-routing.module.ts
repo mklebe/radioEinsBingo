@@ -10,6 +10,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 const routes: Routes = [
   { path: 'kategorien', component: CategoryListComponent, canActivate: [InternalGuardService] },
   { path: 'kategorien/:name', component: PlaceTipsComponent, canActivate: [InternalGuardService] },
+  { path: 'kategorien/:name/ergebnisse', component: ResultComponent, canActivate: [InternalGuardService] },
   { path: 'ergebnisse', component: ResultComponent, canActivate: [InternalGuardService] },
   { path: '', component: WelcomeComponent }
 ];
