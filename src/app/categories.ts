@@ -26,7 +26,7 @@ export const categories: Array<Category> = [
   {
     displayName: "ICH GEB' GAS - Die 100 besten NDW-Lieder",
     name: 'Top100NDW',
-    isClosed: false,
+    isClosed: true,
     imageUrl: getImageUrl('202207/24_07_NDW_16_9.png.png'),
   },
   {
