@@ -32,13 +32,13 @@ export const categories: Array<Category> = [
   {
     displayName: 'FEMALE POWER - Die 100 besten Lieder von Frauen',
     name: 'Top100Frauen',
-    isClosed: false,
+    isClosed: true,
     imageUrl: getImageUrl('202207/31_07_frauen_16_9.png.png'),
   },
   {
     displayName: 'JEANS ON - Die 100 besten Songs über Klamotten',
     name: 'Top100Clothes',
-    isClosed: false,
+    isClosed: true,
     imageUrl: getImageUrl('202207/07_08_jeans_klamotten_16_9.png.png'),
   },
   {
