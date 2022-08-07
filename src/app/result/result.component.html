@@ -14,7 +14,8 @@
       [ngClass]="{
         'success': b.marker === markerTypes.CORRECT_COLUMN,
         'warning': b.marker === markerTypes.IN_LIST,
-        'joker': b.marker === markerTypes.IS_JOKER
+        'joker': b.marker === markerTypes.IS_JOKER,
+        'winner': b.marker === markerTypes.IS_CORRECT_WINNER
       }"
       class="result-element"
       (click)="setJoker(b)"
@@ -52,7 +53,8 @@
         [ngClass]="{
           'success': b.marker === markerTypes.CORRECT_COLUMN,
           'warning': b.marker === markerTypes.IN_LIST,
-          'joker': b.marker === markerTypes.IS_JOKER
+          'joker': b.marker === markerTypes.IS_JOKER,
+          'winner': b.marker === markerTypes.IS_CORRECT_WINNER
         }"
       >
         {{ b.artist }} - {{ b.song }}

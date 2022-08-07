@@ -4,7 +4,8 @@ export enum BoardMarker {
   NOT_LISTED,
   IN_LIST,
   CORRECT_COLUMN,
-  IS_JOKER
+  IS_JOKER,
+  IS_CORRECT_WINNER,
 }
 
 export interface MarkedBoardLineItem extends BoardLineItem {

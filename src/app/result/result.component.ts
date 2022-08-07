@@ -72,11 +72,17 @@ export class ResultComponent {
   private calculateRegularPoints(board: Array<MarkedBoardLineItem>): number {
     let result = 0;
     board.forEach((mbli) => {
-      if (mbli.marker === BoardMarker.CORRECT_COLUMN) {
+      if (
+        mbli.marker === BoardMarker.CORRECT_COLUMN ||
+        mbli.marker === BoardMarker.IS_CORRECT_WINNER
+      ) {
         result += 3
       }
       if (mbli.marker === BoardMarker.IN_LIST) {
         result += 1
+      }
+      if(mbli.marker === BoardMarker.IS_CORRECT_WINNER) {
+        result += 10;
       }
     })
 
@@ -168,6 +174,10 @@ export class ResultComponent {
         outputMbli.marker = BoardMarker.IN_LIST
       }
       outputMbli.placement = foundItem.placement
+      if( outputMbli.boardPosition === "5_1" && foundItem.placement === 1) {
+        console.log(outputMbli)
+        outputMbli.marker = BoardMarker.IS_CORRECT_WINNER
+      }
     } else {
       outputMbli.placement = 0
     }
