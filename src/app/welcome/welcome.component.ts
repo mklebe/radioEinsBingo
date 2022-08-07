@@ -16,16 +16,17 @@ export class WelcomeComponent implements OnInit {
   constructor(
     private readonly userService: UserService,
   ) {
-    this.userService.isLoggedIn()
-      .then(() => {
-        this.isLoggedIn;
-      });
     this.loginForm = new FormGroup({
       username: new FormControl(''),
     });
   }
-
+  
   async ngOnInit(): Promise<void> {
+    this.userService.isLoggedIn()
+      .then(( result ) => {
+        console.log(result)
+        this.isLoggedIn = result;
+      });
     this.username = await this.userService.getCurrentUser();
     this.userService.getIsLoginSubject().subscribe(async ( isLoggedIn ) => {
       this.isLoggedIn = isLoggedIn;

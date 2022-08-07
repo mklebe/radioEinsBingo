@@ -87,7 +87,8 @@ export class UserService {
   }
 
   public isLoggedIn(): Promise<boolean> {
-    return Promise.resolve( !!localStorage.getItem('username') );
+    const un = localStorage.getItem('username');
+    return Promise.resolve( !!un );
   }
 
   public logOut(): Promise<void> {
