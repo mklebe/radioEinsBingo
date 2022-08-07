@@ -84,7 +84,7 @@ export class ResultComponent {
 
   updateResultList() {
     this.songlistApi.updateIndex(this.currentCategory)
-      .then(() => this.fetchResults());
+      .then(() => document.location.reload());
   }
 
   private calculatePlayerScore(board: Array<MarkedBoardLineItem>): number {

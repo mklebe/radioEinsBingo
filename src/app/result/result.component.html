@@ -2,6 +2,7 @@
 <a routerLink="/kategorien">Zurück zur Kategorieübersicht</a>
 <h2>Ergebnisse - {{ userTips.category.displayName }}</h2>
 <p>Deine Punkte: {{ this.result }}</p>
+<button style="margin-bottom: 16px;" mat-raised-button color="primary" (click)="updateResultList()">Punkte aktualisieren</button>
 <ul>
   <li>100 - 81</li>
   <li>80 - 61</li>
