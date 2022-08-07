@@ -24,7 +24,6 @@ export class WelcomeComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.userService.isLoggedIn()
       .then(( result ) => {
-        console.log(result)
         this.isLoggedIn = result;
       });
     this.username = await this.userService.getCurrentUser();

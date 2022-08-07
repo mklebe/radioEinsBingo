@@ -30,6 +30,7 @@ export class ResultComponent {
   billboard: Array<BoardLineItem> = []
   isJokerSet: boolean = false;
 
+
   shownOtherUsersBoard: OtherPlayersBingoBoard | null = null;
 
   markerTypes = BoardMarker
@@ -213,6 +214,7 @@ export class ResultComponent {
   private async fetchResults(): Promise<void> {
     this.songlistApi.getSongList(this.currentCategory).subscribe((data) => {
       this.billboard = data;
+      this.billboard = this.billboard.reverse()
     })
     this.userTips.user = await this.userService.getCurrentUser()
     if (this.userTips.user) {
