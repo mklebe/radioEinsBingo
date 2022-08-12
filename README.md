@@ -1,3 +1,5 @@
 # Top100Bingo
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.2.
+Step 1: checkout
+Step 2: ...
+Step 3: Profit!
