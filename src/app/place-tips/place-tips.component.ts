@@ -19,8 +19,10 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
       displayName: '',
       imageUrl: '',
       isClosed: false,
-      name: ''
-    },
+      name: '',
+      isOpen: true,
+      isAiring: false,
+    } as Category,
     user: '',
     tips: []
   }

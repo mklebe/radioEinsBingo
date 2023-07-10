@@ -2,84 +2,46 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
 import { Subject } from 'rxjs';
 import { BingoBoard } from './interfaces';
+import { HttpClient } from '@angular/common/http';
+
+const API_DOMAIN = "http://localhost:3000"
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  itemRef: AngularFireObject<any>;
   private loginSubject: Subject<boolean>;
 
   constructor(
-    private readonly db: AngularFireDatabase,
+    private readonly http: HttpClient,
   ) {
-    this.itemRef = this.db.object('Top100Lists');
     this.loginSubject = new Subject<boolean>();
   }
 
   public async getUserTips(category: string): Promise<any> {
     const currentUser = await this.getCurrentUser()
 
-    return new Promise((resolve, reject) => {
-      if(!category || !currentUser) {
-        reject();
-        return
-      }
-      this.itemRef.snapshotChanges().subscribe( action => {
-        const payload = action?.payload?.val() || {}
-        const categoryList = payload[category] || {}
-
-        resolve(categoryList[currentUser])
-      })
-    })
+    return this.http.get<BingoBoard[]>(`${API_DOMAIN}/tips/${category}/${currentUser}`).toPromise();
   }
 
   public async getAllTipps(category: string): Promise<Array<BingoBoard>> {
-    return new Promise((resolve, reject) => {
-      if(!category) {
-        reject();
-        return
-      }
-      this.itemRef.snapshotChanges().subscribe( action => {
-
-        const payload = action?.payload?.val() || {}
-        const categoryList: Record<string, Record<string, string>> = payload[category] || {}
-
-        const allBoards: Array<BingoBoard> = []
-        for (const [player, playerSelection] of Object.entries(categoryList)) {
-          const table: Record<string, string> = {}
-          for (const [key, songLine] of Object.entries(playerSelection)) {
-            table[key] = songLine
-          }
-          allBoards.push({
-            player,
-            table,
-            joker: playerSelection.joker
-          })
-        }
-
-        resolve(allBoards)
-      })
-    })
+    return this.http.get<BingoBoard[]>(`${API_DOMAIN}/tips/${category}`).toPromise();
   }
 
   public async setUserTip(category: string, userTip: Record<string, string>): Promise<any> {
-    const userName = await this.getCurrentUser()
-    const categoryReference = this.db.object(`Top100Lists/${category}/${userName}`)
-    return categoryReference.update( userTip );
+    const currentUser = await this.getCurrentUser()
+    return this.http.post<BingoBoard[]>(`${API_DOMAIN}/tips/${category}/${currentUser}`, {}).toPromise();
   }
 
   public async setUserJoker(category: string, field: string): Promise<any> {
-    const userName = await this.getCurrentUser()
-    const categoryReference = this.db.object(`Top100Lists/${category}/${userName}`)
-    return categoryReference.update( {'joker': field} );
+    const currentUser = await this.getCurrentUser()
+    return this.http.post<BingoBoard[]>(`${API_DOMAIN}/tips/${category}/setJoker/${currentUser}`, {}).toPromise();
   }
 
   public async unsetJoker(category: string): Promise<any> {
-    const userName = await this.getCurrentUser()
-    const categoryReference = this.db.object(`Top100Lists/${category}/${userName}/joker`)
-    categoryReference.remove()
+    const currentUser = await this.getCurrentUser()
+    return this.http.post<BingoBoard[]>(`${API_DOMAIN}/tips/${category}/unsetJoker/${currentUser}`, {}).toPromise();
   }
 
   public getCurrentUser(): Promise<string> {

@@ -40,7 +40,9 @@ export class ResultComponent {
       displayName: '',
       imageUrl: '',
       isClosed: false,
-      name: ''
+      name: '',
+      isAiring: false,
+      isOpen: true,
     },
     user: '',
     tips: []
@@ -197,7 +199,7 @@ export class ResultComponent {
       bli.placement = runningCount[index];
       return new Promise((resolve, reject) => {
         if(!!bli.artist || !!bli.song) {
-          this.songlistApi.searchSong(this.currentCategory, bli.artist, bli.song).subscribe((result) => {
+          this.songlistApi.searchSong(this.currentCategory, bli.artist, bli.song).then((result: any) => {
             resolve(
               this.setPlacementForMarkedBoardLineItem(bli, result)
             )
@@ -222,7 +224,7 @@ export class ResultComponent {
   }
 
   private async fetchResults(): Promise<void> {
-    this.songlistApi.getSongList(this.currentCategory).subscribe((data) => {
+    this.songlistApi.getSongList(this.currentCategory).then((data) => {
       this.billboard = data;
       this.billboard = this.billboard.reverse()
     })

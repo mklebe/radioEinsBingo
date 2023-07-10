@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
-import { AngularFireModule } from '@angular/fire';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { environment } from 'src/environments/environment.prod';
 import { MatTabsModule } from "@angular/material/tabs"
 import { MatButtonModule } from "@angular/material/button"
 import { MatInputModule } from "@angular/material/input"
@@ -36,7 +34,6 @@ import { InternalGuardService } from './InternalGuardService';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebase),
     AppRoutingModule,
     FormsModule,
     HttpClientModule,

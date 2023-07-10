@@ -3,6 +3,8 @@ export interface Category {
   name: string;
   isClosed: boolean;
   imageUrl: string;
+  isOpen: boolean;
+  isAiring: boolean;
 };
 
 function getImageUrl(catName: string): string {
@@ -12,47 +14,49 @@ function getImageUrl(catName: string): string {
 
 export const categories: Array<Category> = [
   {
-    displayName: 'RADIO ON - Die 100 besten Lieder übers RADIO',
-    name: 'Top100Radio',
-    isClosed: true,
-    imageUrl: getImageUrl('202207/10_07_radio_16_9.png.png'),
-  },
-  {
-    displayName: "LET'S TALK ABOUT ... - Die 100 besten Lieder übers SEX",
-    name: 'Top100Sex',
-    isClosed: true,
-    imageUrl: getImageUrl('202207/17_07_sex_16_9.png.png'),
-  },
-  {
-    displayName: "ICH GEB' GAS - Die 100 besten NDW-Lieder",
-    name: 'Top100NDW',
-    isClosed: true,
-    imageUrl: getImageUrl('202207/24_07_NDW_16_9.png.png'),
-  },
-  {
-    displayName: 'FEMALE POWER - Die 100 besten Lieder von Frauen',
-    name: 'Top100Frauen',
-    isClosed: true,
-    imageUrl: getImageUrl('202207/31_07_frauen_16_9.png.png'),
-  },
-  {
-    displayName: 'JEANS ON - Die 100 besten Songs über Klamotten',
-    name: 'Top100Clothes',
-    isClosed: true,
-    imageUrl: getImageUrl('202207/07_08_jeans_klamotten_16_9.png.png'),
-  },
-  {
-    displayName: 'ROCK HARD - Die 100 besten Hard Rock und Heavy Metal Songs',
-    name: 'Top100Rock',
+    displayName: 'Cry Me A River - Die 100 besten Trennungslieder/Break-Up-Songs',
+    name: 'Top100Trennungslieder',
     isClosed: false,
-    imageUrl: getImageUrl('202207/14_08_hardrock_metal_16_9.png.png'),
+    imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/Topteaser---Header/top100_trennung_ue_980.jpg.jpg/img.webp',
+    isOpen: true,
+    isAiring: false,
   },
-  {
-    displayName: 'NINETIES - Die 100 besten Songs der 90er-Jahre',
-    name: 'Top100Ninties',
-    isClosed: false,
-    imageUrl: getImageUrl('202207/21_08_90er_16_9.png.png'),
-  },
+  // {
+  //   displayName: "LET'S TALK ABOUT ... - Die 100 besten Lieder übers SEX",
+  //   name: 'Top100Sex',
+  //   isClosed: true,
+  //   imageUrl: getImageUrl('202207/17_07_sex_16_9.png.png'),
+  // },
+  // {
+  //   displayName: "ICH GEB' GAS - Die 100 besten NDW-Lieder",
+  //   name: 'Top100NDW',
+  //   isClosed: true,
+  //   imageUrl: getImageUrl('202207/24_07_NDW_16_9.png.png'),
+  // },
+  // {
+  //   displayName: 'FEMALE POWER - Die 100 besten Lieder von Frauen',
+  //   name: 'Top100Frauen',
+  //   isClosed: true,
+  //   imageUrl: getImageUrl('202207/31_07_frauen_16_9.png.png'),
+  // },
+  // {
+  //   displayName: 'JEANS ON - Die 100 besten Songs über Klamotten',
+  //   name: 'Top100Clothes',
+  //   isClosed: true,
+  //   imageUrl: getImageUrl('202207/07_08_jeans_klamotten_16_9.png.png'),
+  // },
+  // {
+  //   displayName: 'ROCK HARD - Die 100 besten Hard Rock und Heavy Metal Songs',
+  //   name: 'Top100Rock',
+  //   isClosed: false,
+  //   imageUrl: getImageUrl('202207/14_08_hardrock_metal_16_9.png.png'),
+  // },
+  // {
+  //   displayName: 'NINETIES - Die 100 besten Songs der 90er-Jahre',
+  //   name: 'Top100Ninties',
+  //   isClosed: false,
+  //   imageUrl: getImageUrl('202207/21_08_90er_16_9.png.png'),
+  // },
   // {
   //   displayName: 'We Are Family - Die 100 besten Familienlieder',
   //   name: 'Top100Family',
