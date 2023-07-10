@@ -6,6 +6,7 @@ import { SongListService } from '../song-list.service';
 import { UserService } from '../user.service';
 import { BoardMarker, calculateBingoPoints, MarkedBoardLineItem } from './utils';
 import { Subscription } from 'rxjs';
+import { Category } from '../categories';
 
 interface OtherPlayersBingoBoard {
   player: string;
@@ -39,11 +40,12 @@ export class ResultComponent {
     category: {
       displayName: '',
       imageUrl: '',
-      isClosed: false,
+      isFinished: false,
       name: '',
       isAiring: false,
-      isOpen: true,
-    },
+      isUpcoming: true,
+      isRunning: false,
+    } as Category,
     user: '',
     tips: []
   }
@@ -89,11 +91,6 @@ export class ResultComponent {
     })
 
     return result;
-  }
-
-  updateResultList() {
-    this.songlistApi.updateIndex(this.currentCategory)
-      .then(() => document.location.reload());
   }
 
   private calculatePlayerScore(board: Array<MarkedBoardLineItem>): number {

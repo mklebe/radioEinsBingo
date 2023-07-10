@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Category } from './categories';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SongListService {
-  private url: string = 'https://radio-bingo-backend.herokuapp.com/songlist';
+  private url: string = 'http://localhost:3000/categories';
   constructor(
     private readonly httpClient: HttpClient
   ) { }
 
   getSongList(category: string): Promise<any> {
-    // return this.httpClient.get(`${this.url}/${category}/search`);
-    return Promise.resolve({})
+    return this.httpClient.get(`${this.url}/${category}/search`).toPromise();
+    // return Promise.resolve({})
   }
 
   searchSong(category: string, artist: string, song: string): Promise<any> {
@@ -22,9 +22,5 @@ export class SongListService {
 
     // return this.httpClient.get(`${this.url}/${category}/${artist}/${song}`)
     return Promise.resolve({})
-  }
-
-  async updateIndex(name: string): Promise<any> {
-    return this.httpClient.get(`${this.url}/${name}/updateindex`).toPromise()
   }
 }

@@ -20,6 +20,8 @@ import { PlaceTipsComponent } from './place-tips/place-tips.component';
 import { UserService } from './user.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { InternalGuardService } from './InternalGuardService';
+import { environment } from 'src/environments/environment.prod';
+import { AngularFireModule } from '@angular/fire';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { InternalGuardService } from './InternalGuardService';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
     AppRoutingModule,
     FormsModule,
     HttpClientModule,

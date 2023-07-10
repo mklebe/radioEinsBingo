@@ -2,7 +2,7 @@
 <ul class="categories current" >
   <li *ngFor="let category of upcomingLists">
     <a routerLink="/kategorien/{{category.name}}">
-      <article [ngClass]="{'closed': category.isClosed}">
+      <article [ngClass]="{'closed': category.isFinished}">
         <img src="{{ category.imageUrl }}" alt="">
         <p>{{ category.displayName }}</p>
       </article>
@@ -15,7 +15,7 @@
 <ul class="categories finished" >
   <li *ngFor="let category of closedLists">
     <a routerLink="/kategorien/{{category.name}}">
-      <article [ngClass]="{'closed': category.isClosed}">
+      <article [ngClass]="{'closed': category.isFinished}">
         <img src="{{ category.imageUrl }}" alt="">
         <p>{{ category.displayName }}</p>
       </article>

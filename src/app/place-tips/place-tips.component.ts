@@ -18,9 +18,9 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
     category: {
       displayName: '',
       imageUrl: '',
-      isClosed: false,
+      isFinished: false,
       name: '',
-      isOpen: true,
+      isUpcoming: true,
       isAiring: false,
     } as Category,
     user: '',
@@ -115,7 +115,7 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
   private async setCurrentTip(catName: string) {
     this.userTips.user = await this.userService.getCurrentUser()
     this.userTips.category = categories.filter(cat => cat.name === catName)[0];
-    this.isBeforeDeadline = !this.userTips.category.isClosed
+    this.isBeforeDeadline = !this.userTips.category.isFinished
     this.userService.getUserTips(catName)
       .then(value => {
         this.isTippReady = true;

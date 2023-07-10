@@ -10,8 +10,8 @@ import { animals, Board, BoardLineItem, drugs, family, numbers } from '../previo
 export class CategoryListComponent implements OnInit {
   categoryList: Array<Category> = categories;
 
-  upcomingLists: Array<Category> = this.categoryList.filter( cat => !cat.isClosed )
-  closedLists: Array<Category> = this.categoryList.filter( cat => cat.isClosed )
+  upcomingLists: Array<Category> = this.categoryList.filter( cat => !cat.isFinished )
+  closedLists: Array<Category> = this.categoryList.filter( cat => cat.isFinished )
 
   searchTerm: string = '';
   searchResult: Array<BoardLineItem> = []
