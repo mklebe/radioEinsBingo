@@ -7,7 +7,7 @@ import { BoardLineItem } from './previous-lists/lists';
   providedIn: 'root'
 })
 export class SongListService {
-  private url: string = 'https://https://sommer-sonntage.vercel.app/categories';
+  private url: string = 'https://sommer-sonntage.vercel.app/categories';
   constructor(
     private readonly httpClient: HttpClient
   ) { }
