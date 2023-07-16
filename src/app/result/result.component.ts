@@ -28,7 +28,6 @@ export class ResultComponent {
 
   otherPlayersBingoBoards: Array<OtherPlayersBingoBoard> = [];
 
-  billboard: Array<BoardLineItem> = []
   isJokerSet: boolean = false;
 
 
@@ -163,6 +162,7 @@ export class ResultComponent {
 
   private setPlacementForMarkedBoardLineItem(inputMbli: MarkedBoardLineItem, foundItem: BoardLineItem): MarkedBoardLineItem {
     const outputMbli = {...inputMbli}
+    // console.log(inputMbli, foundItem);
     if(foundItem.placement === 0) {
       outputMbli.marker = BoardMarker.NOT_LISTED
       return outputMbli
@@ -177,14 +177,13 @@ export class ResultComponent {
     }
     outputMbli.placement = foundItem.placement
     if( outputMbli.boardPosition === "5_1" && foundItem.placement === 1) {
-      console.log(outputMbli)
       outputMbli.marker = BoardMarker.IS_CORRECT_WINNER
     }
 
     return outputMbli;
   }
 
-  private getPlacementForBoard(board: Array<MarkedBoardLineItem>): Promise<MarkedBoardLineItem>[] {
+  private async getPlacementForBoard(board: Array<MarkedBoardLineItem>): Promise<MarkedBoardLineItem[]> {
     let runningCount = [
       100, 80, 60, 40, 20,
       100, 80, 60, 40, 20,
@@ -193,29 +192,13 @@ export class ResultComponent {
       100, 80, 60, 40, 20,
     ];
 
-    const result: Promise<MarkedBoardLineItem>[] = board.map((bli, index) => {
+    const searchResultList = await this.songlistApi.bulkSearchSong(this.currentCategory, board);
+    // console.log(board, searchResultList);
+    return searchResultList.map((searchResult: BoardLineItem, index) => {
+      const bli = board[index];
       bli.placement = runningCount[index];
-      return new Promise((resolve, reject) => {
-        if(!!bli.artist || !!bli.title) {
-          this.songlistApi.searchSong(this.currentCategory, bli.artist, bli.title).then((result: BoardLineItem) => {
-            console.log(result);
-            resolve(
-              this.setPlacementForMarkedBoardLineItem(bli, result)
-            )
-          })
-        } else {
-          const a: MarkedBoardLineItem = {
-            artist: '',
-            title: '',
-            marker: BoardMarker.NOT_LISTED,
-            placement: 0,
-          }
-          reject(a)
-        }
-      })
+      return this.setPlacementForMarkedBoardLineItem(bli, searchResult)
     })
-
-    return result;
   }
 
   showOtherUsersBoard( board: OtherPlayersBingoBoard ): void {
@@ -223,18 +206,14 @@ export class ResultComponent {
   }
 
   private async fetchResults(): Promise<void> {
-    this.songlistApi.getSongList(this.currentCategory).then((data) => {
-      this.billboard = data;
-      this.billboard = this.billboard.reverse()
-    })
     this.userTips.user = await this.userService.getCurrentUser()
     if (this.userTips.user) {
       this.userService.getUserTips(this.currentCategory)
         .then(async (value) => {
           const currentUsersBoard: MarkedBoardLineItem[] = this.setBingoBoardValues(value);
           this.bingoBoard = currentUsersBoard;
-          const checksForPlacement: Promise<MarkedBoardLineItem>[] = this.getPlacementForBoard(this.bingoBoard)
-          Promise.all(checksForPlacement).then((e) => {
+          this.getPlacementForBoard(this.bingoBoard).then((e) => {
+            console.log(e);
             this.bingoBoard = e
             this.updateResult()
           })
@@ -279,7 +258,7 @@ export class ResultComponent {
                 lines: this.getPlacementForBoard(b.lines),
               }
             }).map(async b => {
-              let z = await Promise.all(b.lines).then(a => {
+              let z = await b.lines.then(a => {
                 return {...b, ...{ lines: a }}
               })
               z.points = this.calculatePlayerScore(z.lines)
