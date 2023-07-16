@@ -113,7 +113,7 @@ export class ResultComponent {
 
     return {
       artist,
-      song,
+      title: song,
       marker: BoardMarker.NOT_LISTED,
       placement: 0,
     }
@@ -161,25 +161,26 @@ export class ResultComponent {
     return result;
   }
 
-  private setPlacementForMarkedBoardLineItem(inputMbli: MarkedBoardLineItem, result: any): MarkedBoardLineItem {
+  private setPlacementForMarkedBoardLineItem(inputMbli: MarkedBoardLineItem, foundItem: BoardLineItem): MarkedBoardLineItem {
     const outputMbli = {...inputMbli}
-    if (result.length > 0) {
-      const foundItem = result[0];
-      const placementDelta = outputMbli.placement - foundItem.placement
-      const isPlacedInRightColumn = placementDelta >= 0 && placementDelta < 20
-      if (isPlacedInRightColumn) {
-        outputMbli.marker = BoardMarker.CORRECT_COLUMN
-      } else {
-        outputMbli.marker = BoardMarker.IN_LIST
-      }
-      outputMbli.placement = foundItem.placement
-      if( outputMbli.boardPosition === "5_1" && foundItem.placement === 1) {
-        console.log(outputMbli)
-        outputMbli.marker = BoardMarker.IS_CORRECT_WINNER
-      }
-    } else {
-      outputMbli.placement = 0
+    if(foundItem.placement === 0) {
+      outputMbli.marker = BoardMarker.NOT_LISTED
+      return outputMbli
     }
+
+    const placementDelta = outputMbli.placement - foundItem.placement
+    const isPlacedInRightColumn = placementDelta >= 0 && placementDelta < 20
+    if (isPlacedInRightColumn) {
+      outputMbli.marker = BoardMarker.CORRECT_COLUMN
+    } else {
+      outputMbli.marker = BoardMarker.IN_LIST
+    }
+    outputMbli.placement = foundItem.placement
+    if( outputMbli.boardPosition === "5_1" && foundItem.placement === 1) {
+      console.log(outputMbli)
+      outputMbli.marker = BoardMarker.IS_CORRECT_WINNER
+    }
+
     return outputMbli;
   }
 
@@ -195,8 +196,9 @@ export class ResultComponent {
     const result: Promise<MarkedBoardLineItem>[] = board.map((bli, index) => {
       bli.placement = runningCount[index];
       return new Promise((resolve, reject) => {
-        if(!!bli.artist || !!bli.song) {
-          this.songlistApi.searchSong(this.currentCategory, bli.artist, bli.song).then((result: any) => {
+        if(!!bli.artist || !!bli.title) {
+          this.songlistApi.searchSong(this.currentCategory, bli.artist, bli.title).then((result: BoardLineItem) => {
+            console.log(result);
             resolve(
               this.setPlacementForMarkedBoardLineItem(bli, result)
             )
@@ -204,7 +206,7 @@ export class ResultComponent {
         } else {
           const a: MarkedBoardLineItem = {
             artist: '',
-            song: '',
+            title: '',
             marker: BoardMarker.NOT_LISTED,
             placement: 0,
           }

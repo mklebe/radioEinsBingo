@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Category } from './categories';
+import { BoardLineItem } from './previous-lists/lists';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +17,15 @@ export class SongListService {
     // return Promise.resolve({})
   }
 
-  searchSong(category: string, artist: string, song: string): Promise<any> {
+  searchSong(category: string, artist: string, song: string): Promise<BoardLineItem> {
     artist = window.encodeURIComponent(artist)
     song = window.encodeURIComponent(song)
 
-    // return this.httpClient.get(`${this.url}/${category}/${artist}/${song}`)
-    return Promise.resolve({})
+    return new Promise((resolve) => {
+      this.httpClient.post<BoardLineItem>(`${this.url}/search/${category}`, {
+        artist,
+        title: song,
+      }).subscribe((item) => resolve(item));
+    })
   }
 }

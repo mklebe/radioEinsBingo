@@ -19,7 +19,7 @@
       class="result-element"
       (click)="setJoker(b)"
     >
-      {{ b.artist }} - {{ b.song }}
+      {{ b.artist }} - {{ b.title }}
       <span *ngIf="b.placement">
         <br />
         Gefunden auf {{ b.placement }}
@@ -56,7 +56,7 @@
           'winner': b.marker === markerTypes.IS_CORRECT_WINNER
         }"
       >
-        {{ b.artist }} - {{ b.song }}
+        {{ b.artist }} - {{ b.title }}
         <span *ngIf="b.placement">
           <br />
           Gefunden auf {{ b.placement }}
@@ -68,5 +68,5 @@
 
 <h2>Die aktuelle Liste</h2>
 <p *ngFor="let b of billboard">
-  {{ b.placement }}. {{ b.artist }} - {{ b.song }}
+  {{ b.placement }}. {{ b.artist }} - {{ b.title }}
 </p>

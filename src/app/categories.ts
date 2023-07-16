@@ -27,12 +27,17 @@ export const categories: Array<Category> = [
     airingEndsAt: new Date(),
     airingStartsAt: new Date(),
   },
-  // {
-  //   displayName: "LET'S TALK ABOUT ... - Die 100 besten Lieder übers SEX",
-  //   name: 'Top100Sex',
-  //   isFinished: true,
-  //   imageUrl: getImageUrl('202207/17_07_sex_16_9.png.png'),
-  // },
+  {
+    displayName: "LET'S TALK ABOUT ... - Die 100 besten Lieder übers SEX",
+    name: 'Top100Sex',
+    isFinished: true,
+    imageUrl: getImageUrl('202207/17_07_sex_16_9.png.png'),
+    isUpcoming: false,
+    isAiring: false,
+    isRunning: false,
+    airingEndsAt: new Date(),
+    airingStartsAt: new Date(),
+  },
   // {
   //   displayName: "ICH GEB' GAS - Die 100 besten NDW-Lieder",
   //   name: 'Top100NDW',
@@ -63,12 +68,17 @@ export const categories: Array<Category> = [
   //   isFinished: false,
   //   imageUrl: getImageUrl('202207/21_08_90er_16_9.png.png'),
   // },
-  // {
-  //   displayName: 'We Are Family - Die 100 besten Familienlieder',
-  //   name: 'Top100Family',
-  //   isFinished: true,
-  //   imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/202106/musiksommer_familie_16_92.png.png/quality=205/size=300x170.png'
-  // },
+  {
+    displayName: 'We Are Family - Die 100 besten Familienlieder',
+    name: 'Top100Family',
+    isFinished: true,
+    imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/202106/musiksommer_familie_16_92.png.png/quality=205/size=300x170.png',
+    isUpcoming: false,
+    isAiring: false,
+    isRunning: false,
+    airingEndsAt: new Date(),
+    airingStartsAt: new Date(),
+  },
   // {
   //   displayName: 'Magic Numbers - Die 100 besten Songs mit Zahlen im Titel',
   //   name: 'Top100Numbers',

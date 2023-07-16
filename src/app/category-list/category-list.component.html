@@ -26,5 +26,5 @@
 <h2>Künstlersuche</h2>
 <input type="text" [(ngModel)]="searchTerm" (input)="searchArtist()">
 <ul *ngFor="let hit of searchResult">
-  <li>{{ hit.placement }}. {{ hit.artist }} - {{ hit.song }}</li>
+  <li>{{ hit.placement }}. {{ hit.artist }} - {{ hit.title }}</li>
 </ul>
