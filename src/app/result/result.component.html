@@ -65,3 +65,9 @@
     </li>
   </ul>
 </div>
+<div>
+  <h4>Aktuelle Top 100 {{userTips.category.displayName}}</h4>
+    <p *ngFor="let b of currentCategoriesList">
+        {{b.placement}}. {{ b.artist }} - {{ b.title }}
+    </p>
+</div>

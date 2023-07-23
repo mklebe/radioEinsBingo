@@ -7,8 +7,8 @@ import { Board, BoardLineItem } from './previous-lists/lists';
   providedIn: 'root'
 })
 export class SongListService {
-  // private url: string = 'http://localhost:3000/categories';
-  private url: string = 'https://sommer-sonntage.vercel.app/categories';
+  private url: string = 'http://localhost:3000/categories';
+  // private url: string = 'https://sommer-sonntage.vercel.app/categories';
   constructor(
     private readonly httpClient: HttpClient
   ) { }
@@ -25,6 +25,10 @@ export class SongListService {
         .post<BoardLineItem[]>(`${this.url}/search/bulk/${category}/`, encodedBatch)
         .subscribe((item) => resolve(item));
     })
+  }
+
+  getSongList(category: string): Promise<BoardLineItem[]> {
+    return this.httpClient.get<BoardLineItem[]>(`${this.url}/${category}`).toPromise();
   }
 
   searchSong(category: string, artist: string, song: string): Promise<BoardLineItem> {

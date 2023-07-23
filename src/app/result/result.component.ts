@@ -25,6 +25,7 @@ export class ResultComponent {
   notification: string = '';
   private navigationSubscription: Subscription;
   private currentCategory: string = '';
+  currentCategoriesList: BoardLineItem[] = [];
 
   otherPlayersBingoBoards: Array<OtherPlayersBingoBoard> = [];
 
@@ -206,6 +207,10 @@ export class ResultComponent {
   }
 
   private async fetchResults(): Promise<void> {
+    this.songlistApi.getSongList(this.currentCategory)
+      .then((currentList) => {
+        this.currentCategoriesList = currentList;
+      });
     this.userTips.user = await this.userService.getCurrentUser()
     if (this.userTips.user) {
       this.userService.getUserTips(this.currentCategory)
