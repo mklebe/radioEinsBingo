@@ -163,9 +163,13 @@ export class ResultComponent {
 
   private setPlacementForMarkedBoardLineItem(inputMbli: MarkedBoardLineItem, foundItem: BoardLineItem): MarkedBoardLineItem {
     const outputMbli = {...inputMbli}
-    // console.log(inputMbli, foundItem);
+    if(inputMbli.marker === BoardMarker.IS_JOKER) {
+      outputMbli.placement = 0;
+      return outputMbli;
+    }
     if(foundItem.placement === 0) {
       outputMbli.marker = BoardMarker.NOT_LISTED
+      outputMbli.placement = 0;
       return outputMbli
     }
 
@@ -215,6 +219,7 @@ export class ResultComponent {
     if (this.userTips.user) {
       this.userService.getUserTips(this.currentCategory)
         .then(async (value) => {
+          console.log(value);
           const currentUsersBoard: MarkedBoardLineItem[] = this.setBingoBoardValues(value);
           this.bingoBoard = currentUsersBoard;
           this.getPlacementForBoard(this.bingoBoard).then((e) => {
@@ -236,7 +241,6 @@ export class ResultComponent {
             .filter( board => board.player !== this.userTips.user)
             .map((board) => {
               const value = board.table
-              console.log( value )
               const result: MarkedBoardLineItem[] = []
               for (let i = 1; i < 6; i++) {
                 for (let j = 1; j < 6; j++) {
@@ -250,7 +254,6 @@ export class ResultComponent {
                   result.push( mbli );
                 }
               }
-              // return result;
               return {
                 player: board.player,
                 lines: result,
