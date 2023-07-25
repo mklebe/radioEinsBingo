@@ -17,9 +17,20 @@ function getImageUrl(catName: string): string {
 
 export const categories: Array<Category> = [
   {
+    displayName: 'How Soon Is Now? - Die 100 besten Lieder, die Fragen stellen',
+    name: 'Top100Questions',
+    isFinished: false,
+    imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/Topteaser---Header/top100_fragen_ue_980.jpg.jpg/img.jpg',
+    isUpcoming: true,
+    isAiring: false,
+    isRunning: false,
+    airingEndsAt: new Date(),
+    airingStartsAt: new Date(),
+  },
+  {
     displayName: 'Body Parts - Die 100 besten Lieder über Körperteile',
     name: 'Top100BodyParts',
-    isFinished: false,
+    isFinished: true,
     imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/Topteaser---Header/top100_koerperteile_ue_980.jpg.jpg/img.webp',
     isUpcoming: true,
     isAiring: false,
