@@ -17,11 +17,22 @@ function getImageUrl(catName: string): string {
 
 export const categories: Array<Category> = [
   {
+    displayName: 'PSYCHEDELIA - Die 100 besten psychedelischen Songs',
+    name: 'Top100Psychedelic',
+    isFinished: false,
+    imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/Topteaser---Header/top100_psychedelia_ue_980.jpg.jpg/img.jpg',
+    isUpcoming: true,
+    isAiring: false,
+    isRunning: false,
+    airingEndsAt: new Date(),
+    airingStartsAt: new Date(),
+  },
+  {
     displayName: 'How Soon Is Now? - Die 100 besten Lieder, die Fragen stellen',
     name: 'Top100Questions',
-    isFinished: false,
+    isFinished: true,
     imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/Topteaser---Header/top100_fragen_ue_980.jpg.jpg/img.jpg',
-    isUpcoming: true,
+    isUpcoming: false,
     isAiring: false,
     isRunning: false,
     airingEndsAt: new Date(),
