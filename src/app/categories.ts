@@ -17,11 +17,22 @@ function getImageUrl(catName: string): string {
 
 export const categories: Array<Category> = [
   {
+    displayName: 'Skandal, Skandal - Die 100 besten Skandal-Songs',
+    name: 'Top100Scandal',
+    isFinished: false,
+    imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/Topteaser---Header/top100_skandal_ue_980.jpg.jpg/img.jpg',
+    isUpcoming: true,
+    isAiring: false,
+    isRunning: false,
+    airingEndsAt: new Date(),
+    airingStartsAt: new Date(),
+  },
+  {
     displayName: 'PSYCHEDELIA - Die 100 besten psychedelischen Songs',
     name: 'Top100Psychedelic',
-    isFinished: false,
+    isFinished: true,
     imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/Topteaser---Header/top100_psychedelia_ue_980.jpg.jpg/img.jpg',
-    isUpcoming: true,
+    isUpcoming: false,
     isAiring: false,
     isRunning: false,
     airingEndsAt: new Date(),

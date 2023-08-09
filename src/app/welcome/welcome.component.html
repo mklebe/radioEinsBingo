@@ -1,9 +1,9 @@
 <h1>RadioEins Top100 Bingo</h1>
-<ng-container *ngIf="isLoggedIn; else loggedout">
+<ng-container *ngIf="isLoggedIn; else loggedOut">
   <p>Hallo {{ username }}!</p>
-  <p>Lass uns mit ein paar <a routerLink="/kategorien/Top100Psychedelic">Tipps beginnen</a>!</p>
+  <p>Lass uns mit ein paar <a routerLink="/kategorien/Top100Scandal">Tipps beginnen</a>!</p>
 </ng-container>
-<ng-template #loggedout>
+<ng-template #loggedOut>
   <p>
     Oh wir haben einen neuen Herausforderer! Bitte sag mir wie ich dich ansprechen kann,
     dann kannst du auch gleich loslegen!
