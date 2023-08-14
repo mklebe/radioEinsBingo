@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { categories, Category } from '../categories';
 import { animals, Board, BoardLineItem, drugs, family, numbers } from '../previous-lists/lists';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-category-list',
@@ -20,7 +21,11 @@ export class CategoryListComponent implements OnInit {
     drugs, animals, family, numbers,
   ];
 
-  constructor() { }
+  constructor(
+    private readonly titleService: Title,
+  ) {
+    this.titleService.setTitle('Kategorieübersicht');
+  }
 
   searchArtist(): void {
     this.searchResult = [

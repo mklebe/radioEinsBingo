@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Category, categories } from '../categories';
 import { UserTip } from '../interfaces';
 import { UserService } from '../user.service';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -41,7 +42,8 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private titleService: Title,
   ) {
     this.bingoBoard = new FormGroup({
       '1_1': new FormControl(''),
@@ -90,6 +92,7 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
         }
 
         this.setCurrentTip(catName)
+        this.titleService.setTitle(`${catName} Tippabgabe`);
       }
     })
   }

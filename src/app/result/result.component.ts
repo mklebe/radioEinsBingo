@@ -7,6 +7,7 @@ import { UserService } from '../user.service';
 import { BoardMarker, calculateBingoPoints, MarkedBoardLineItem } from './utils';
 import { Subscription } from 'rxjs';
 import { Category } from '../categories';
+import { Title } from '@angular/platform-browser';
 
 interface OtherPlayersBingoBoard {
   player: string;
@@ -55,6 +56,7 @@ export class ResultComponent {
     private router: Router,
     private readonly userService: UserService,
     private readonly songlistApi: SongListService,
+    private readonly titleService: Title,
   ) {
     this.navigationSubscription = this.router.events.subscribe(async (event) => {
       if (event instanceof NavigationEnd) {
@@ -65,6 +67,7 @@ export class ResultComponent {
         }
         this.currentCategory = catName;
         this.fetchResults();
+        this.titleService.setTitle(`${catName} Ergebnisse`);
       }
     })
   }

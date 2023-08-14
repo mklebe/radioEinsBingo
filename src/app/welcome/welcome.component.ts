@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { UserService } from '../user.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-welcome',
@@ -15,7 +16,9 @@ export class WelcomeComponent implements OnInit {
 
   constructor(
     private readonly userService: UserService,
+    private readonly titleService: Title,
   ) {
+    this.titleService.setTitle('Sommersonntage Bingo');
     this.loginForm = new FormGroup({
       username: new FormControl(''),
     });
