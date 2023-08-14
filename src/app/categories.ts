@@ -17,11 +17,22 @@ function getImageUrl(catName: string): string {
 
 export const categories: Array<Category> = [
   {
+    displayName: 'H2O - Die 100 besten Lieder über das Element Wasser',
+    name: 'Top100Water',
+    isFinished: false,
+    imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/Topteaser---Header/top100_wasser_ue_980.jpg.jpg/img.jpg',
+    isUpcoming: true,
+    isAiring: false,
+    isRunning: false,
+    airingEndsAt: new Date(),
+    airingStartsAt: new Date(),
+  },
+  {
     displayName: 'Skandal, Skandal - Die 100 besten Skandal-Songs',
     name: 'Top100Scandal',
-    isFinished: false,
+    isFinished: true,
     imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/Topteaser---Header/top100_skandal_ue_980.jpg.jpg/img.jpg',
-    isUpcoming: true,
+    isUpcoming: false,
     isAiring: false,
     isRunning: false,
     airingEndsAt: new Date(),
