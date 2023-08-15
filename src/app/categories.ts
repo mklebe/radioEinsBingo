@@ -16,7 +16,17 @@ function getImageUrl(catName: string): string {
 }
 
 export const categories: Array<Category> = [
-  {
+ {
+    displayName: 'Agenda '00 - Die 100 besten Lieder der Nullerjahre',
+    name: 'Top100Zero',
+    isFinished: false,
+    imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/Topteaser---Header/top100_nuller_ue_980.jpg.jpg/img.jpg',
+    isUpcoming: true,
+    isAiring: false,
+    isRunning: false,
+    airingEndsAt: new Date(),
+    airingStartsAt: new Date(),
+  }, {
     displayName: 'H2O - Die 100 besten Lieder über das Element Wasser',
     name: 'Top100Water',
     isFinished: false,
