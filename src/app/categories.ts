@@ -17,7 +17,7 @@ function getImageUrl(catName: string): string {
 
 export const categories: Array<Category> = [
  {
-    displayName: 'Agenda '00 - Die 100 besten Lieder der Nullerjahre',
+    displayName: 'Agenda 00 - Die 100 besten Lieder der Nullerjahre',
     name: 'Top100Zero',
     isFinished: false,
     imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/Topteaser---Header/top100_nuller_ue_980.jpg.jpg/img.jpg',
