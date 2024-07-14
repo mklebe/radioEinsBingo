@@ -1,16 +1,9 @@
-<mat-toolbar
-  color="primary"
-  class="navigation"
->
+<mat-toolbar color="primary" class="navigation">
   <mat-toolbar-row>
     <a class="homelink" routerLink="">RadioEins Bingo</a>&nbsp;
     <span class="example-spacer"></span>
-    <button 
-      mat-icon-button
-      class="example-icon"
-      aria-label="Example icon-button with menu icon"
-      [matMenuTriggerFor]="menu"
-    >
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+      [matMenuTriggerFor]="menu">
       <mat-icon>menu</mat-icon>
     </button>
   </mat-toolbar-row>
@@ -19,10 +12,10 @@
       <a routerLink="/kategorien">Alle Tipprunden</a>
     </button>
     <button mat-menu-item>
-      <a routerLink="/kategorien/Top100Zero">Aktuelle Tipprunde</a>
+      <a routerLink="/kategorien/{{currentCategory.name}}">Aktuelle Tipprunde</a>
     </button>
     <button mat-menu-item>
-      <a routerLink="/kategorien/Top100Zero/ergebnisse">Ergebnisse aktuelle Tipprunde</a>
+      <a routerLink="/kategorien/{{currentCategory.name}}/ergebnisse">Ergebnisse aktuelle Tipprunde</a>
     </button>
     <hr />
     <button mat-menu-item (click)="logOut()">

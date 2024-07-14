@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { UserService } from '../user.service';
 import { Title } from '@angular/platform-browser';
+import { Category, getCurrentCategory } from '../categories';
 
 @Component({
   selector: 'app-welcome',
@@ -14,6 +15,8 @@ export class WelcomeComponent implements OnInit {
   public isLoggedIn: boolean = false;
   public loginForm: FormGroup;
 
+  public currentCategory: Category = getCurrentCategory();
+
   constructor(
     private readonly userService: UserService,
     private readonly titleService: Title,
@@ -23,14 +26,14 @@ export class WelcomeComponent implements OnInit {
       username: new FormControl(''),
     });
   }
-  
+
   async ngOnInit(): Promise<void> {
     this.userService.isLoggedIn()
-      .then(( result ) => {
+      .then((result) => {
         this.isLoggedIn = result;
       });
     this.username = await this.userService.getCurrentUser();
-    this.userService.getIsLoginSubject().subscribe(async ( isLoggedIn ) => {
+    this.userService.getIsLoginSubject().subscribe(async (isLoggedIn) => {
       this.isLoggedIn = isLoggedIn;
       this.username = await this.userService.getCurrentUser();
     })

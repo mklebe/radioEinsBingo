@@ -2,13 +2,17 @@ export interface Category {
   displayName: string;
   name: string;
   isFinished: boolean;
-  imageUrl: string;
+  imageUrl: string | null;
   isUpcoming: boolean;
   isAiring: boolean;
   isRunning: boolean;
-    airingStartsAt: Date;
+  airingStartsAt: Date;
   airingEndsAt: Date;
 };
+
+export function getCurrentCategory(): Category {
+  return categories.find(category => category.isRunning) || categories.find(category => category.isUpcoming) || categories[0];
+}
 
 function getImageUrl(catName: string): string {
 
@@ -16,12 +20,92 @@ function getImageUrl(catName: string): string {
 }
 
 export const categories: Array<Category> = [
- {
+  {
+    displayName: 'Up North - Die 100 besten Songs aus Skandinavien, Island & Finnland',
+    name: 'Top100UpNorth',
+    isFinished: false,
+    imageUrl: null,
+    isUpcoming: true,
+    isAiring: false,
+    isRunning: false,
+    airingEndsAt: new Date(),
+    airingStartsAt: new Date(),
+  },
+  {
+    displayName: 'Crime Time - Die 100 besten Songs über das Verbrechen',
+    name: 'Top100CrimeTime',
+    isFinished: false,
+    imageUrl: null,
+    isUpcoming: false,
+    isAiring: false,
+    isRunning: false,
+    airingEndsAt: new Date(),
+    airingStartsAt: new Date(),
+  },
+  {
+    displayName: 'Eat It - Die 100 besten Songs über das Essen',
+    name: 'Top100EatIt',
+    isFinished: false,
+    imageUrl: null,
+    isUpcoming: false,
+    isAiring: false,
+    isRunning: false,
+    airingEndsAt: new Date(),
+    airingStartsAt: new Date(),
+  },
+  // categories with the display names Swining Sixties - Die 100 besten Songs der 60er-Jahre, If I Had A Hammer - Die 100 besten Songs über Arbeit,
+  // Out of Space - Die 100 besten Songs über das Weltall und Sci-Fi, Britpop - Die 100 besten Songs der Britpop-Ära
+  // are missing the imageUrl property
+  {
+    displayName: 'Swinging Sixties - Die 100 besten Songs der 60er-Jahre',
+    name: 'Top100Sixties',
+    isFinished: false,
+    imageUrl: null,
+    isUpcoming: false,
+    isAiring: false,
+    isRunning: false,
+    airingEndsAt: new Date(),
+    airingStartsAt: new Date(),
+  },
+  {
+    displayName: 'If I Had A Hammer - Die 100 besten Songs über Arbeit',
+    name: 'Top100Work',
+    isFinished: false,
+    imageUrl: null,
+    isUpcoming: false,
+    isAiring: false,
+    isRunning: false,
+    airingEndsAt: new Date(),
+    airingStartsAt: new Date(),
+  },
+  {
+    displayName: 'Out of Space - Die 100 besten Songs über das Weltall und Sci-Fi',
+    name: 'Top100Space',
+    isFinished: false,
+    imageUrl: null,
+    isUpcoming: false,
+    isAiring: false,
+    isRunning: false,
+    airingEndsAt: new Date(),
+    airingStartsAt: new Date(),
+  },
+  {
+    displayName: 'Britpop - Die 100 besten Songs der Britpop-Ära',
+    name: 'Top100Britpop',
+    isFinished: false,
+    imageUrl: null,
+    isUpcoming: false,
+    isAiring: false,
+    isRunning: false,
+    airingEndsAt: new Date(),
+    airingStartsAt: new Date(),
+  },
+  {
     displayName: 'Agenda 00 - Die 100 besten Lieder der Nullerjahre',
     name: 'Top100Zero',
-    isFinished: false,
+    isFinished: true,
     imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/Topteaser---Header/top100_nuller_ue_980.jpg.jpg/img.jpg',
-    isUpcoming: true,
+    isUpcoming: false,
     isAiring: false,
     isRunning: false,
     airingEndsAt: new Date(),
@@ -29,9 +113,9 @@ export const categories: Array<Category> = [
   }, {
     displayName: 'H2O - Die 100 besten Lieder über das Element Wasser',
     name: 'Top100Water',
-    isFinished: false,
+    isFinished: true,
     imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/Topteaser---Header/top100_wasser_ue_980.jpg.jpg/img.jpg',
-    isUpcoming: true,
+    isUpcoming: false,
     isAiring: false,
     isRunning: false,
     airingEndsAt: new Date(),
@@ -75,7 +159,7 @@ export const categories: Array<Category> = [
     name: 'Top100BodyParts',
     isFinished: true,
     imageUrl: 'https://www.radioeins.de/content/dam/rbb/rad/bilder0/Topteaser---Header/top100_koerperteile_ue_980.jpg.jpg/img.webp',
-    isUpcoming: true,
+    isUpcoming: false,
     isAiring: false,
     isRunning: false,
     airingEndsAt: new Date(),

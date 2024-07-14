@@ -1,9 +1,12 @@
 <h2>Kommende Top 100 Listen</h2>
-<ul class="categories current" >
+<ul class="categories current">
   <li *ngFor="let category of upcomingLists">
     <a routerLink="/kategorien/{{category.name}}">
-      <article [ngClass]="{'closed': category.isFinished}">
-        <img src="{{ category.imageUrl }}" alt="">
+      <article [ngClass]="{'closed': category.isFinished }">
+        <img *ngIf="category.imageUrl" src="{{ category.imageUrl }}" alt="">
+        <div *ngIf="category.imageUrl === null" class="blankImagePlaceholder">
+          {{ category.name }}
+        </div>
         <p>{{ category.displayName }}</p>
       </article>
     </a>
@@ -12,7 +15,7 @@
 <hr />
 <h2>Abgeschlossene Top 100 Listen</h2>
 <hr />
-<ul class="categories finished" >
+<ul class="categories finished">
   <li *ngFor="let category of closedLists">
     <a routerLink="/kategorien/{{category.name}}">
       <article [ngClass]="{'closed': category.isFinished}">

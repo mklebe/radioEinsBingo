@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from './user.service';
+import { Category, getCurrentCategory } from './categories';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,8 @@ import { UserService } from './user.service';
 })
 
 export class AppComponent {
-  constructor( 
+  public currentCategory: Category = getCurrentCategory()
+  constructor(
     private readonly userService: UserService,
     private readonly router: Router,
   ) { }
