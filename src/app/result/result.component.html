@@ -9,16 +9,12 @@
   <li>40 - 21</li>
   <li>20 - 1</li>
   <li *ngFor="let b of bingoBoard">
-    <p 
-      [ngClass]="{
+    <p [ngClass]="{
         'success': b.marker === markerTypes.CORRECT_COLUMN,
         'warning': b.marker === markerTypes.IN_LIST,
         'joker': b.marker === markerTypes.IS_JOKER,
         'winner': b.marker === markerTypes.IS_CORRECT_WINNER
-      }"
-      class="result-element"
-      (click)="setJoker(b)"
-    >
+      }" class="result-element" (click)="setJoker(b)">
       {{ b.artist }} - {{ b.title }}
       <span *ngIf="b.placement">
         <br />
@@ -32,15 +28,19 @@
   anklicken um den Joker zu setzen!
 </p>
 
-<h2>Die Listen der anderen Spieler</h2>
+<h2>Score board für die Kategorie {{categoryName}}</h2>
+<mat-list>
+  <mat-list-item *ngFor="let item of allPlayersScores; index as position">
+    {{position + 1 }} {{item.player}}, Value: {{item.points}}
+  </mat-list-item>
+</mat-list>
+
+<h2>Die Details der anderen Spieler</h2>
 <div class="otherUserList">
-  <span 
-    [ngClass]="{
+  <span [ngClass]="{
       'otherUserNames': true,
       'activeUser': board === shownOtherUsersBoard
-    }"
-    *ngFor="let board of otherPlayersBingoBoards"
-    (click)="showOtherUsersBoard(board)">
+    }" *ngFor="let board of otherPlayersBingoBoards" (click)="showOtherUsersBoard(board)">
     {{ board.player }} ({{ board.points }})
   </span>
 </div>
@@ -48,14 +48,12 @@
   <h4>Die Liste von: {{ shownOtherUsersBoard.player }}</h4>
   <ul>
     <li *ngFor="let b of shownOtherUsersBoard.lines">
-      <p 
-        [ngClass]="{
+      <p [ngClass]="{
           'success': b.marker === markerTypes.CORRECT_COLUMN,
           'warning': b.marker === markerTypes.IN_LIST,
           'joker': b.marker === markerTypes.IS_JOKER,
           'winner': b.marker === markerTypes.IS_CORRECT_WINNER
-        }"
-      >
+        }">
         {{ b.artist }} - {{ b.title }}
         <span *ngIf="b.placement">
           <br />
@@ -67,7 +65,7 @@
 </div>
 <div>
   <h4>Aktuelle Top 100 {{userTips.category.displayName}}</h4>
-    <p *ngFor="let b of currentCategoriesList">
-        {{b.placement}}. {{ b.artist }} - {{ b.title }}
-    </p>
+  <p *ngFor="let b of currentCategoriesList">
+    {{b.placement}}. {{ b.artist }} - {{ b.title }}
+  </p>
 </div>

@@ -27,6 +27,8 @@ export class ResultComponent {
   private navigationSubscription: Subscription;
   private currentCategory: string = '';
   currentCategoriesList: BoardLineItem[] = [];
+  categoryName: string = '';
+  allPlayersScores: Array<OtherPlayersBingoBoard> = [];
 
   otherPlayersBingoBoards: Array<OtherPlayersBingoBoard> = [];
 
@@ -67,6 +69,7 @@ export class ResultComponent {
         }
         this.currentCategory = catName;
         this.fetchResults();
+        this.categoryName = catName;
         this.titleService.setTitle(`${catName} Ergebnisse`);
       }
     })
@@ -88,7 +91,7 @@ export class ResultComponent {
       if (mbli.marker === BoardMarker.IN_LIST) {
         result += 1
       }
-      if(mbli.marker === BoardMarker.IS_CORRECT_WINNER) {
+      if (mbli.marker === BoardMarker.IS_CORRECT_WINNER) {
         result += 10;
       }
     })
@@ -104,8 +107,13 @@ export class ResultComponent {
   }
 
   private updateResult() {
-    this.result = this.calculatePlayerScore(this.bingoBoard)
-    this.isJokerSet = this.bingoBoard.filter( i => i.marker === BoardMarker.IS_JOKER).length > 0
+    this.result = this.calculatePlayerScore(this.bingoBoard);
+    this.allPlayersScores.push({
+      player: this.userTips.user,
+      lines: this.bingoBoard,
+      points: this.result,
+    });
+    this.isJokerSet = this.bingoBoard.filter(i => i.marker === BoardMarker.IS_JOKER).length > 0
   }
 
   private convertStringToMarkedBoardLineItem(entry: string): MarkedBoardLineItem {
@@ -123,23 +131,23 @@ export class ResultComponent {
   }
 
   async setJoker(item: MarkedBoardLineItem) {
-    if( item.marker === BoardMarker.IS_JOKER ) {
+    if (item.marker === BoardMarker.IS_JOKER) {
       item.marker = BoardMarker.NOT_LISTED
       await this.userService.unsetJoker(this.currentCategory)
       this.updateResult()
       return
-    } else if( item.marker !== BoardMarker.NOT_LISTED ) {
+    } else if (item.marker !== BoardMarker.NOT_LISTED) {
       return
     }
 
     let joker = this.bingoBoard
-      .filter((b) => b.marker === BoardMarker.IS_JOKER )[0]
-    if(joker)
+      .filter((b) => b.marker === BoardMarker.IS_JOKER)[0]
+    if (joker)
       joker.marker = BoardMarker.NOT_LISTED
 
-    if( item.marker === BoardMarker.NOT_LISTED ) {
+    if (item.marker === BoardMarker.NOT_LISTED) {
       item.marker = BoardMarker.IS_JOKER
-    } else if( item.marker === BoardMarker.IS_JOKER ) {
+    } else if (item.marker === BoardMarker.IS_JOKER) {
       item.marker = BoardMarker.NOT_LISTED
     }
 
@@ -154,23 +162,23 @@ export class ResultComponent {
         const mbli = this.convertStringToMarkedBoardLineItem(value[`${j}_${i}`]);
         mbli.boardPosition = `${j}_${i}`;
 
-        if(value.joker == `${j}_${i}`) {
+        if (value.joker == `${j}_${i}`) {
           mbli.marker = BoardMarker.IS_JOKER
         }
 
-        result.push( mbli );
+        result.push(mbli);
       }
     }
     return result;
   }
 
   private setPlacementForMarkedBoardLineItem(inputMbli: MarkedBoardLineItem, foundItem: BoardLineItem): MarkedBoardLineItem {
-    const outputMbli = {...inputMbli}
-    if(inputMbli.marker === BoardMarker.IS_JOKER) {
+    const outputMbli = { ...inputMbli }
+    if (inputMbli.marker === BoardMarker.IS_JOKER) {
       outputMbli.placement = 0;
       return outputMbli;
     }
-    if(foundItem.placement === 0) {
+    if (foundItem.placement === 0) {
       outputMbli.marker = BoardMarker.NOT_LISTED
       outputMbli.placement = 0;
       return outputMbli
@@ -184,7 +192,7 @@ export class ResultComponent {
       outputMbli.marker = BoardMarker.IN_LIST
     }
     outputMbli.placement = foundItem.placement
-    if( outputMbli.boardPosition === "5_1" && foundItem.placement === 1) {
+    if (outputMbli.boardPosition === "5_1" && foundItem.placement === 1) {
       outputMbli.marker = BoardMarker.IS_CORRECT_WINNER
     }
 
@@ -209,7 +217,7 @@ export class ResultComponent {
     })
   }
 
-  showOtherUsersBoard( board: OtherPlayersBingoBoard ): void {
+  showOtherUsersBoard(board: OtherPlayersBingoBoard): void {
     this.shownOtherUsersBoard = board;
   }
 
@@ -239,9 +247,9 @@ export class ResultComponent {
         })
 
       this.userService.getAllTipps(this.currentCategory)
-        .then(async ( allBingoBoards ) => {
+        .then(async (allBingoBoards) => {
           allBingoBoards
-            .filter( board => board.player !== this.userTips.user)
+            .filter(board => board.player !== this.userTips.user)
             .map((board) => {
               const value = board.table
               const result: MarkedBoardLineItem[] = []
@@ -250,11 +258,11 @@ export class ResultComponent {
                   const mbli = this.convertStringToMarkedBoardLineItem(value[`${j}_${i}`]);
                   mbli.boardPosition = `${j}_${i}`;
 
-                  if(value.joker == `${j}_${i}`) {
+                  if (value.joker == `${j}_${i}`) {
                     mbli.marker = BoardMarker.IS_JOKER
                   }
 
-                  result.push( mbli );
+                  result.push(mbli);
                 }
               }
               return {
@@ -270,12 +278,16 @@ export class ResultComponent {
               }
             }).map(async b => {
               let z = await b.lines.then(a => {
-                return {...b, ...{ lines: a }}
+                return { ...b, ...{ lines: a } }
               })
               z.points = this.calculatePlayerScore(z.lines)
               this.otherPlayersBingoBoards.push(z)
+              this.allPlayersScores.push(z)
+              this.allPlayersScores.sort((a, b) => {
+                return b.points - a.points
+              });
             })
-        })
+        });
     }
   }
 }

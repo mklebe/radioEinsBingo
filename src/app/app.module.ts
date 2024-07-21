@@ -22,6 +22,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { InternalGuardService } from './InternalGuardService';
 import { environment } from 'src/environments/environment.prod';
 import { AngularFireModule } from '@angular/fire';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { AngularFireModule } from '@angular/fire';
     WelcomeComponent,
     CategoryListComponent,
     ResultComponent,
-    PlaceTipsComponent
+    PlaceTipsComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +44,7 @@ import { AngularFireModule } from '@angular/fire';
     NoopAnimationsModule,
     MatButtonModule,
     MatTabsModule,
+    MatListModule,
     MatInputModule,
     MatToolbarModule,
     MatIconModule,
