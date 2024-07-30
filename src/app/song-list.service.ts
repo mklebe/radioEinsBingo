@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Category } from './categories';
-import { Board, BoardLineItem } from './previous-lists/lists';
+import { BoardLineItem } from './previous-lists/lists';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SongListService {
-  // private url: string = 'http://localhost:3000/categories';
-  private url: string = 'https://sommer-sonntage.vercel.app/categories';
+  private url: string = `${environment}/categories`;
   constructor(
     private readonly httpClient: HttpClient
   ) { }

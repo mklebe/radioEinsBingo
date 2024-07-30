@@ -1,19 +1,8 @@
-interface FirebaseConfig {
-    apiKey: string;
-    authDomain: string;
-    databaseURL: string;
-    projectId: string;
-    storageBucket: string;
-    messagingSenderId: string;
-    appId: string;
-}
-interface EnvironmentParameter {
-  production: boolean
-  firebase: FirebaseConfig
-}
+import { EnvironmentParameter } from "./types";
 
 export const environment: EnvironmentParameter = {
   production: true,
+  apiUrl: "https://sommer-sonntage.vercel.app",
   firebase: {
     apiKey: "AIzaSyCnqaKlgHVWYk55hboVbDuRfCqkKrWMZRQ",
     authDomain: "radioeins-bingo.firebaseapp.com",
