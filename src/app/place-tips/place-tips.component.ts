@@ -36,6 +36,12 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
   motivationsMap: Array<string> = [''];
 
   isTippReady: boolean = false;
+  rowsComplete = new Map<string, boolean>()
+    .set('1', false)
+    .set('2', false)
+    .set('3', false)
+    .set('4', false)
+    .set('5', false);
 
   private navigationSubscription: Subscription;
 
@@ -74,12 +80,23 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
     });
 
     this.bingoBoard.valueChanges.subscribe((object: Object) => {
+      const tipsPerColumn = new Map<string, number>();
       let numberOfTouchedField = 0;
       for (const [key, value] of Object.entries(object)) {
-        if( value !== '' ) {
+        const [column] = key.split('_');
+        if (value !== '') {
+          tipsPerColumn.set(column, (tipsPerColumn.get(column) || 0) + 1);
           ++numberOfTouchedField;
         }
       }
+      this.rowsComplete
+        .set('1', tipsPerColumn.get('1') === 5)
+        .set('2', tipsPerColumn.get('2') === 5)
+        .set('3', tipsPerColumn.get('3') === 5)
+        .set('4', tipsPerColumn.get('4') === 5)
+        .set('5', tipsPerColumn.get('5') === 5);
+
+
       this.numberOfSetTips = numberOfTouchedField;
     })
 
@@ -128,7 +145,7 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
             0
           ) > 0;
 
-        const tipps = {...value};
+        const tipps = { ...value };
         delete tipps.joker;
 
         if (isAnyTippSet) {
@@ -157,7 +174,7 @@ export class PlaceTipsComponent implements OnInit, OnDestroy {
       const currentString = userTipps[currentKey];
       return overallLength + currentString.length
     }, 0);
-    if( tippsLength === 0 ) {
+    if (tippsLength === 0) {
       return;
     }
     this.userService.setUserTip(this.userTips.category.name, userTipps)

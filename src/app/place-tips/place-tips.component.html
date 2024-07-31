@@ -13,123 +13,139 @@
     <p>Die richtige Nummer 1 wird mit 10 Punkten belohnt</p>
   </div>
   <mat-tab-group>
-    <mat-tab label="100 - 81">
-      <mat-form-field  class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="2" formControlName="1_1" type="text">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        100 - 81
+        <mat-icon *ngIf="rowsComplete.get('1')">check</mat-icon>
+      </ng-template>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="2" formControlName="1_1"
+          type="text">
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="3" formControlName="1_2" type="text">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="3" formControlName="1_2"
+          type="text">
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="4" formControlName="1_3" type="text">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="4" formControlName="1_3"
+          type="text">
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="5" formControlName="1_4" type="text">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="5" formControlName="1_4"
+          type="text">
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="6" formControlName="1_5" type="text">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="6" formControlName="1_5"
+          type="text">
       </mat-form-field>
     </mat-tab>
-    <mat-tab label="80 - 61">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        80 - 61
+        <mat-icon *ngIf="rowsComplete.get('2')">check</mat-icon>
+      </ng-template>
       <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="7" formControlName="2_1" type="text">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="7" formControlName="2_1"
+          type="text">
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="8" formControlName="2_2" type="text">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="8" formControlName="2_2"
+          type="text">
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="9" formControlName="2_3" type="text">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="9" formControlName="2_3"
+          type="text">
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="10" formControlName="2_4" type="text">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="10" formControlName="2_4"
+          type="text">
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="11" formControlName="2_5" type="text">
-      </mat-form-field>
-    </mat-tab>
-    <mat-tab label="60 - 41">
-      <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="12" formControlName="3_1" type="text">
-      </mat-form-field>
-      <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="13" formControlName="3_2" type="text">
-      </mat-form-field>
-      <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="14" formControlName="3_3" type="text">
-      </mat-form-field>
-      <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="15" formControlName="3_4" type="text">
-      </mat-form-field>
-      <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="16" formControlName="3_5" type="text">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="11" formControlName="2_5"
+          type="text">
       </mat-form-field>
     </mat-tab>
-    <mat-tab label="40 - 21">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        60 - 41
+        <mat-icon *ngIf="rowsComplete.get('3')">check</mat-icon>
+      </ng-template>
       <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="17" formControlName="4_1" type="text">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="12" formControlName="3_1"
+          type="text">
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="18" formControlName="4_2" type="text">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="13" formControlName="3_2"
+          type="text">
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="19" formControlName="4_3" type="text">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="14" formControlName="3_3"
+          type="text">
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="20" formControlName="4_4" type="text">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="15" formControlName="3_4"
+          type="text">
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="21" formControlName="4_5" type="text">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="16" formControlName="3_5"
+          type="text">
       </mat-form-field>
     </mat-tab>
-    <mat-tab label="20 - 1">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        40 - 21
+        <mat-icon *ngIf="rowsComplete.get('4')">check</mat-icon>
+      </ng-template>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="17" formControlName="4_1"
+          type="text">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="18" formControlName="4_2"
+          type="text">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="19" formControlName="4_3"
+          type="text">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="20" formControlName="4_4"
+          type="text">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="21" formControlName="4_5"
+          type="text">
+      </mat-form-field>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        20 - 1
+        <mat-icon *ngIf="rowsComplete.get('5')">check</mat-icon>
+      </ng-template>
       <mat-form-field class="example-full-width first-place" appearance="fill">
         <mat-label>Platz eins!</mat-label>
-        <input class="first-place" placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="22" formControlName="5_1" type="text">
+        <input class="first-place" placeholder="Rick Astley - Never gonna give you up" matInput tabindex="22"
+          formControlName="5_1" type="text">
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="23" formControlName="5_2" type="text">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="23" formControlName="5_2"
+          type="text">
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="24" formControlName="5_3" type="text">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="24" formControlName="5_3"
+          type="text">
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="25" formControlName="5_4" type="text">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="25" formControlName="5_4"
+          type="text">
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
-        <input placeholder="Rick Astley - Never gonna give you up"
-          matInput tabindex="26" formControlName="5_5" type="text">
+        <input placeholder="Rick Astley - Never gonna give you up" matInput tabindex="26" formControlName="5_5"
+          type="text">
       </mat-form-field>
     </mat-tab>
   </mat-tab-group>
 
-  <button 
-    mat-raised-button color="primary"
-    [disabled]="!isBeforeDeadline && isTippReady"
-    disabled="!isBeforeDeadline && isTippReady"
-    tabindex="27"
-    type="submit">Speichern</button>
+  <button mat-raised-button color="primary" [disabled]="!isBeforeDeadline && isTippReady"
+    disabled="!isBeforeDeadline && isTippReady" tabindex="27" type="submit">Speichern</button>
 </form>
