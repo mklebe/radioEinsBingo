@@ -2,6 +2,16 @@
 <a routerLink="/kategorien">Zurück zur Kategorieübersicht</a>
 <h2>Ergebnisse - {{ userTips.category.displayName }}</h2>
 <p>Deine Punkte: {{ this.result }}</p>
+
+<h2>Score board für die Kategorie {{categoryName}}</h2>
+<table class="result-table">
+  <tr *ngFor="let item of allPlayersScores; index as position">
+    <td>{{position + 1 }}</td>
+    <td>{{item.player}}</td>
+    <td>{{item.points}}</td>
+  </tr>
+</table>
+
 <ul>
   <li>100 - 81</li>
   <li>80 - 61</li>
@@ -27,13 +37,6 @@
   Hey, ich sehe du hast noch keinen Joker gesetzt! Du kannst das entsprechende Feld
   anklicken um den Joker zu setzen!
 </p>
-
-<h2>Score board für die Kategorie {{categoryName}}</h2>
-<mat-list>
-  <mat-list-item *ngFor="let item of allPlayersScores; index as position">
-    {{position + 1 }} {{item.player}}, Value: {{item.points}}
-  </mat-list-item>
-</mat-list>
 
 <h2>Die Details der anderen Spieler</h2>
 <div class="otherUserList">

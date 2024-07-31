@@ -4,7 +4,7 @@ import { BoardLineItem } from '../previous-lists/lists';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { SongListService } from '../song-list.service';
 import { UserService } from '../user.service';
-import { BoardMarker, calculateBingoPoints, MarkedBoardLineItem } from './utils';
+import { BoardMarker, calculateBingoPoints, calculateRegularPoints, MarkedBoardLineItem } from './utils';
 import { Subscription } from 'rxjs';
 import { Category } from '../categories';
 import { Title } from '@angular/platform-browser';
@@ -79,40 +79,27 @@ export class ResultComponent {
     this.navigationSubscription.unsubscribe();
   }
 
-  private calculateRegularPoints(board: Array<MarkedBoardLineItem>): number {
-    let result = 0;
-    board.forEach((mbli) => {
-      if (
-        mbli.marker === BoardMarker.CORRECT_COLUMN ||
-        mbli.marker === BoardMarker.IS_CORRECT_WINNER
-      ) {
-        result += 3
-      }
-      if (mbli.marker === BoardMarker.IN_LIST) {
-        result += 1
-      }
-      if (mbli.marker === BoardMarker.IS_CORRECT_WINNER) {
-        result += 10;
-      }
-    })
-
-    return result;
-  }
-
   private calculatePlayerScore(board: Array<MarkedBoardLineItem>): number {
     let result = 0;
-    result += this.calculateRegularPoints(board)
+    result += calculateRegularPoints(board)
     result += calculateBingoPoints(board);
     return result
   }
 
   private updateResult() {
     this.result = this.calculatePlayerScore(this.bingoBoard);
-    this.allPlayersScores.push({
-      player: this.userTips.user,
-      lines: this.bingoBoard,
-      points: this.result,
-    });
+    const [currentPlayer] = this.allPlayersScores.filter((p) => p.player === this.userTips.user)
+    if (currentPlayer) {
+      currentPlayer.points = this.result;
+      currentPlayer.lines = this.bingoBoard;
+    } else {
+      this.allPlayersScores.push({
+        player: this.userTips.user,
+        lines: this.bingoBoard,
+        points: this.result,
+      });
+    }
+
     this.isJokerSet = this.bingoBoard.filter(i => i.marker === BoardMarker.IS_JOKER).length > 0
   }
 

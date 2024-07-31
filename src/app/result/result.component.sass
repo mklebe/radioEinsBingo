@@ -13,6 +13,20 @@ li
   flex-wrap: wrap
   text-align: center
 
+.result-table
+  font-size: 1.5rem
+  line-height: 1.5
+  margin-bottom: 1rem
+  width: 100%
+  @media screen and (min-width: 620px)
+    width: 50%
+
+  tr:first-child
+    background-color: lime
+
+  td
+    padding: 2px 8px
+
 .note
   padding: .5rem
   background-color: red
@@ -74,7 +88,6 @@ p
 
   &.activeUser
     text-decoration: underline
-
 
 button
   width: 45%

@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class SongListService {
-  private url: string = `${environment}/categories`;
+  private url: string = `${environment.apiUrl}/categories`;
   constructor(
     private readonly httpClient: HttpClient
   ) { }
