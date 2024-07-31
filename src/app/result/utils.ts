@@ -32,6 +32,47 @@ export function calculateRegularPoints(board: Array<MarkedBoardLineItem>): numbe
   return result;
 }
 
+export function convertStringToMarkedBoardLineItem(entry: string): MarkedBoardLineItem {
+  const line = entry.replace('–', '-')
+  const titleDivider = new RegExp(/ – | - /);
+  const artist: string = line.split(titleDivider)[0]
+  const song: string = line.split(titleDivider)[1];
+
+  return {
+    artist,
+    title: song,
+    marker: BoardMarker.NOT_LISTED,
+    placement: 0,
+  }
+}
+
+export function setPlacementForMarkedBoardLineItem(inputMbli: MarkedBoardLineItem, foundItem: BoardLineItem): MarkedBoardLineItem {
+  const outputMbli = { ...inputMbli }
+  if (inputMbli.marker === BoardMarker.IS_JOKER) {
+    outputMbli.placement = 0;
+    return outputMbli;
+  }
+  if (foundItem.placement === 0) {
+    outputMbli.marker = BoardMarker.NOT_LISTED
+    outputMbli.placement = 0;
+    return outputMbli
+  }
+
+  const placementDelta = outputMbli.placement - foundItem.placement
+  const isPlacedInRightColumn = placementDelta >= 0 && placementDelta < 20
+  if (isPlacedInRightColumn) {
+    outputMbli.marker = BoardMarker.CORRECT_COLUMN
+  } else {
+    outputMbli.marker = BoardMarker.IN_LIST
+  }
+  outputMbli.placement = foundItem.placement
+  if (outputMbli.boardPosition === "5_1" && foundItem.placement === 1) {
+    outputMbli.marker = BoardMarker.IS_CORRECT_WINNER
+  }
+
+  return outputMbli;
+}
+
 export function calculateBingoPoints(bingoBoard: MarkedBoardLineItem[]): number {
   const bb: Array<Array<number>> = new Array(5)
   bb[0] = new Array(5)
