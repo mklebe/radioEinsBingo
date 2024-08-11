@@ -11,7 +11,7 @@ export interface Category {
 };
 
 export function getCurrentCategory(): Category {
-  return categories.find(category => category.isRunning) || categories.find(category => category.isUpcoming) || categories[0];
+  return categories.find(category => category.name === "Top100Work")!;
 }
 
 function getImageUrl(catName: string): string {
@@ -45,11 +45,11 @@ export const categories: Array<Category> = [
   {
     displayName: 'Eat It - Die 100 besten Songs über das Essen',
     name: 'Top100EatIt',
-    isFinished: false,
+    isFinished: true,
     imageUrl: null,
-    isUpcoming: true,
+    isUpcoming: false,
     isAiring: false,
-    isRunning: true,
+    isRunning: false,
     airingEndsAt: new Date(),
     airingStartsAt: new Date(),
   },
@@ -59,7 +59,7 @@ export const categories: Array<Category> = [
   {
     displayName: 'Swinging Sixties - Die 100 besten Songs der 60er-Jahre',
     name: 'Top100Sixties',
-    isFinished: false,
+    isFinished: true,
     imageUrl: null,
     isUpcoming: false,
     isAiring: false,
@@ -72,7 +72,7 @@ export const categories: Array<Category> = [
     name: 'Top100Work',
     isFinished: false,
     imageUrl: null,
-    isUpcoming: false,
+    isUpcoming: true,
     isAiring: false,
     isRunning: false,
     airingEndsAt: new Date(),
